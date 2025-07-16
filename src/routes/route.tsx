@@ -14,7 +14,8 @@ import {
   StudentLayout,
   TeacherLayout,
   Worker,
-  // Courses,
+  Courses,
+  SingleCourse,
 } from "@pages";
 import NotFound from "../pages/not-found/not-found";
 import LoginProtect from "../pages/protect/login-protect";
@@ -45,8 +46,8 @@ const Router = () => {
         >
           <Route index element={<Groups />} />
           <Route path="group/:id" element={<SingleGroup />} />
-          {/* <Route path="courses" element={<Courses />} /> */}
-          <Route path="courses/:id" element={<SingleGroup />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="courses/:id" element={<SingleCourse />} />
           <Route path="teacher" element={<TeacherLayout />} />
           <Route path="student" element={<StudentLayout />} />
         </Route>

@@ -10,6 +10,7 @@ export const courseService = {
   },
 
   async createCourse(model: Course) {
+    console.log("model", model);
     const res = await apiConfig().postRequest(ApiUrls.COURSES, model);
     Notification("success", res?.data.message);
 
@@ -23,7 +24,7 @@ export const courseService = {
       description: model.description,
       price: model.price,
       duration: model.duration,
-      lesson_in_a_week: model.lesson_in_a_week,
+      lessons_in_a_week: model.lessons_in_a_week,
       lesson_duration: model.lesson_duration,
       is_active: model.is_active,
       created_at: model.created_at,

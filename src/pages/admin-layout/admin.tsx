@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import {
   BookOutlined,
   DribbbleOutlined,
+  FormOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
-import { PopConfirm } from "@components";
+import { clearStorage } from "../../helpers";
 
 const { Header, Sider, Content } = Layout;
 
@@ -24,6 +25,12 @@ const App: React.FC = () => {
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(`/${key}`);
   };
+
+  const handleLogout = () => {
+    clearStorage();
+    navigate("/");
+  };
+
   return (
     <>
       <Layout>
@@ -52,7 +59,7 @@ const App: React.FC = () => {
               },
               {
                 key: "admin/courses",
-                icon: <DribbbleOutlined />,
+                icon: <FormOutlined />,
                 label: "Courses",
               },
             ]}
@@ -61,26 +68,35 @@ const App: React.FC = () => {
         <Layout>
           <Header
             style={{
-              padding: 0,
+              padding: "0 24px",
               background: colorBgContainer,
               display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontWeight: "bold",
             }}
           >
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: 64,
-                height: 64,
-              }}
-            />
-            <h1>Admin Layout</h1>
-            {/* <PopConfirm
-              handleDelete={() => deleteItem(record.id!)}
-              loading={isDeleting}
-            /> */}
+            <div>
+              <Button
+                type="text"
+                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                onClick={() => setCollapsed(!collapsed)}
+                style={{
+                  fontSize: "16px",
+                  width: 64,
+                  height: 64,
+                }}
+              />
+              <span
+                style={{fontSize:"36px" }}
+              >
+                Admin Layout
+              </span>
+            </div>
+
+            <Button type="primary" danger onClick={handleLogout}>
+              Logout
+            </Button>
           </Header>
           <Content
             style={{

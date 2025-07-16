@@ -1,3 +1,5 @@
+import moment from "moment";
+import { Tag } from "antd";
 import type { Course, Group } from "@types";
 import type { TableProps } from "antd";
 // GROUP COLUMNS
@@ -11,22 +13,27 @@ export const GroupColums: TableProps<Group>["columns"] = [
     title: "Course",
     dataIndex: "course",
     key: "course",
-    render: (course:{title:string}) => <span>{course.title}</span>,
+    render: (course: { title: string }) => <span>{course.title}</span>,
   },
   {
     title: "Start date",
     dataIndex: "start_date",
     key: "start_date",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
   },
   {
     title: "End date",
     dataIndex: "end_date",
     key: "end_date",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
+    render: (value: boolean) => (
+      <Tag color={value ? "blue" : "gold"}>{value ? value : value}</Tag>
+    ),
   },
 ];
 
@@ -53,9 +60,9 @@ export const CourseColums: TableProps<Course>["columns"] = [
     key: "duration",
   },
   {
-    title: "Lesson in a week",
-    dataIndex: "lesson_in_a_week",
-    key: "lesson_in_a_week",
+    title: "Lessons in a week",
+    dataIndex: "lessons_in_a_week",
+    key: "lessons_in_a_week",
   },
   {
     title: "Lesson duration",
@@ -66,16 +73,21 @@ export const CourseColums: TableProps<Course>["columns"] = [
     title: "Is active",
     dataIndex: "is_active",
     key: "is_active",
+    render: (value: boolean) => (
+      <Tag color={value ? "blue" : "gold"}>{value ? "Active" : "Inactive"}</Tag>
+    ),
   },
   {
     title: "Created date",
     dataIndex: "created_at",
     key: "created_at",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
   },
   {
     title: "Updated date",
     dataIndex: "updated_at",
     key: "updated_at",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
   },
 ];
 

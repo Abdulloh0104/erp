@@ -1,187 +1,241 @@
-// import { useState } from "react";
-// import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-// import { courseService } from "../../service/course.service";
-// import { useCourse } from "@hooks";
-// import type { Course } from "../../types";
-// interface FormType {
-//   title: string;
-//   description: string;
-//   price: number;
-//   duration: string;
-//   lesson_in_a_week: number;
-//   lesson_duration: string;
-//   is_active: boolean;
-//   created_at: string;
-//   updated_at: string;
-// }
+import { Button, Form, Input, Modal, Select } from "antd";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
+import type { ModalProps, Course } from "@types";
+import { useCourse } from "@hooks";
+import { courseFormSchema } from "@utils";
+interface CourseProps extends ModalProps {
+  update: Course | null;
+}
 
-// // interface CourseIDi {
-// //   id: number;
-// //   name: string;
-// //   course_id: number;
-// //   price: string;
-// //   start_date: string;
-// //   end_date: string;
-// // }
+const CourseModel = ({ open, toggle, update }: CourseProps) => {
+  const { useCourseUpdate, useCourseCreate } = useCourse({
+    page: 1,
+    limit: 10,
+  });
+  const { mutate: createFn } = useCourseCreate();
+  const { mutate: updateFn } = useCourseUpdate();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(courseFormSchema),
+    defaultValues: {
+      title: "",
+      duration: undefined,
+      lessons_in_a_week: undefined,
+      lesson_duration: undefined,
+      price: undefined,
+      description: "",
+    },
+  });
+  useEffect(() => {
+    if (update?.id) {
+      setValue("title", update.title);
+      setValue("duration", update.duration);
+      setValue("lessons_in_a_week", update.lessons_in_a_week);
+      setValue("lesson_duration", update.lesson_duration);
+      setValue("price", update.price);
+      setValue("description", update.description);
+    }
+  }, [update, setValue]);
+  const onSubmit = (data: any) => {
+    if (update?.id) {
+      updateFn({ ...data, id: update.id });
+      console.log("Update Course", { ...data, id: update.id });
+      toggle();
+    } else {
+      createFn(data);
+      console.log("Create Course", data);
+      toggle();
+    }
+  };
+  return (
+    <Modal
+      title="Course Modal"
+      centered
+      open={open}
+      onCancel={toggle}
+      width={700}
+      closeIcon
+      footer={null}
+    >
+      <Form
+        layout="vertical"
+        autoComplete="on"
+        onFinish={handleSubmit(onSubmit)}
+      >
+        <Form.Item
+          label="Title"
+          name="title"
+          validateStatus={errors.title ? "error" : ""}
+          help={errors.title ? errors.title.message : ""}
+        >
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                status={errors.title ? "error" : ""}
+                placeholder="Title"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Duration"
+          name="duration"
+          validateStatus={errors.duration ? "error" : ""}
+          help={errors.duration ? errors.duration.message : ""}
+        >
+          <Controller
+            name="duration"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder="Select duration"
+                status={errors.duration ? "error" : ""}
+                options={[
+                  { value: "2 month", label: "2 month" },
+                  { value: "3 month", label: "3 month" },
+                  { value: "4 month", label: "4 month" },
+                  { value: "5 month", label: "5 month" },
+                  { value: "6 month", label: "6 month" },
+                  { value: "7 month", label: "7 month" },
+                  { value: "8 month", label: "8 month" },
+                ]}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Lessons in a week"
+          name="lessons_in_a_week"
+          validateStatus={errors.lessons_in_a_week ? "error" : ""}
+          help={
+            errors.lessons_in_a_week ? errors.lessons_in_a_week.message : ""
+          }
+        >
+          <Controller
+            name="lessons_in_a_week"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder="Select duration"
+                status={errors.lessons_in_a_week ? "error" : ""}
+                options={[
+                  { value: 3, label: "3" },
+                  { value: 5, label: "5" },
+                ]}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Lesson duration"
+          name="lesson_duration"
+          validateStatus={errors.lesson_duration ? "error" : ""}
+          help={errors.lesson_duration ? errors.lesson_duration.message : ""}
+        >
+          <Controller
+            name="lesson_duration"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder="Select lesson duration"
+                status={errors.lesson_duration ? "error" : ""}
+                options={[
+                  { value: "120 min", label: "120 min" },
+                  { value: "180 min", label: "180 min" },
+                  { value: "240 min", label: "240 min" },
+                  { value: "270 min", label: "270 min" },
+                ]}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Price for a month"
+          name="price"
+          validateStatus={errors.price ? "error" : ""}
+          help={errors.price ? errors.price.message : ""}
+        >
+          <Controller
+            name="price"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder="Select price for a month"
+                status={errors.price ? "error" : ""}
+                options={[
+                  { value: 1350000, label: "1350000" },
+                  { value: 1400000, label: "1400000" },
+                  { value: 1300000, label: "1300000" },
+                  { value: 1600000, label: "1600000" },
+                  { value: 1650000, label: "1650000" },
+                  { value: 1900000, label: "1900000" },
+                  { value: 2000000, label: "2000000" },
+                ]}
+              />
+            )}
+          />
+        </Form.Item>
+        {/* <Form.Item
+          label="Is active"
+          name="is_active"
+          validateStatus={errors.is_active ? "error" : ""}
+          help={errors.is_active ? errors.is_active.message : ""}
+        >
+          <Controller
+            name="is_active"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder="Select is active"
+                status={errors.is_active ? "error" : ""}
+                options={[
+                  { value: "true", label: "active" },
+                  { value: "false", label: "inactive" },
+                ]}
+              />
+            )}
+          />
+        </Form.Item> */}
+        <Form.Item
+          label="Description"
+          name="description"
+          validateStatus={errors.description ? "error" : ""}
+          help={errors.description ? errors.description.message : ""}
+        >
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                status={errors.description ? "error" : ""}
+                placeholder="description"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
 
-// interface ProductModalProps {
-//   isOpen: boolean;
-//   toggle: () => void;
-//   courses: Course[];
-//   setCourses: (products: Course[]) => void;
-//   update: Course | null;
-// }
-
-// const CourseModal: React.FC<ProductModalProps> = ({
-//   isOpen,
-//   toggle,
-//   update,
-// }) => {
-//   const { useCourseUpdate } = useCourse({page:1,limit:11});
-//   const { mutate: UpdateFn } = useCourseUpdate();
-
-//   const [form, setForm] = useState<FormType>({
-//     title: "",
-//     description: "",
-//     price: 1,
-//     duration: "",
-//     lesson_in_a_week: 1,
-//     lesson_duration: "",
-//     is_active: true,
-//     created_at: "",
-//     updated_at: "",
-//   });
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setForm({ ...form, [name]: name === "course_id" ? Number(value) : value });
-//   };
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (update === null) {
-//       console.log({ ...form });
-//       courseService.createCourse({ ...form });
-//     } else {
-//       const updated = {
-//         ...form,
-//         id: update.id,
-//         title: form.title ? form.title : update.title,
-//         description: form.description ? form.description : update.description,
-//         price: form.price ? form.price : update.price,
-//         duration: form.duration ? form.duration : update.duration,
-//         lesson_in_a_week: form.lesson_in_a_week
-//           ? form.lesson_in_a_week
-//           : update.lesson_in_a_week,
-//         lesson_duration: form.lesson_duration
-//           ? form.lesson_duration
-//           : update.lesson_duration,
-//         is_active: form.is_active ? form.is_active : update.is_active,
-//         created_at: form.created_at ? form.created_at : update.created_at,
-//         updated_at: form.updated_at ? form.updated_at : update.updated_at,
-//       };
-//       UpdateFn(updated);
-//     }
-//     toggle();
-//   };
-//   return (
-//     <Modal isOpen={isOpen} toggle={toggle}>
-//       <ModalHeader>
-//         {update === null ? <span>Add Course</span> : <span>Update Course</span>}
-//       </ModalHeader>
-//       <ModalBody>
-//         <form id="course" onSubmit={handleSubmit}>
-//           <input
-//             type="text"
-//             defaultValue={update?.title}
-//             required
-//             name="title"
-//             onChange={handleChange}
-//             placeholder="Title..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="text"
-//             defaultValue={update?.description}
-//             required
-//             name="description"
-//             onChange={handleChange}
-//             placeholder="Description..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="number"
-//             defaultValue={update?.price}
-//             required
-//             name="price"
-//             onChange={handleChange}
-//             placeholder="Price..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="duration"
-//             defaultValue={update?.duration}
-//             required
-//             name="duration"
-//             onChange={handleChange}
-//             placeholder="Duration..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="number"
-//             defaultValue={update?.lesson_in_a_week}
-//             required
-//             name="lesson_in_a_week"
-//             onChange={handleChange}
-//             placeholder="Lesson in a week..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="text"
-//             defaultValue={update?.lesson_duration}
-//             required
-//             name="lesson_duration"
-//             onChange={handleChange}
-//             placeholder="Lesson duration..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="text"
-//             defaultValue={update?.is_active!}
-//             required
-//             name="is_active"
-//             onChange={handleChange}
-//             placeholder="is_active..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="string"
-//             defaultValue={update?.created_at}
-//             required
-//             name="created_at"
-//             onChange={handleChange}
-//             placeholder="Created at..."
-//             className="form-control my-2"
-//           />
-//           <input
-//             type="string"
-//             defaultValue={update?.updated_at}
-//             required
-//             name="updated_at"
-//             onChange={handleChange}
-//             placeholder="Updated at..."
-//             className="form-control my-2"
-//           />
-//         </form>
-//       </ModalBody>
-//       <ModalFooter>
-//         <button className="btn btn-danger" onClick={toggle}>
-//           cancel
-//         </button>
-//         <button className="btn btn-info" form="course">
-//           save
-//         </button>
-//       </ModalFooter>
-//     </Modal>
-//   );
-// };
-
-// export default CourseModal;
+export default CourseModel;

@@ -1,13 +1,14 @@
 import { Button, Table, Space, type TablePaginationConfig } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { useGeneral, useGroup } from "@hooks";
-import { CourseColums, PopConfirm } from "@components";
+import { useCourse, useGeneral } from "@hooks";
+import {PopConfirm } from "@components";
 import type { Course, } from "@types";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import CourseModel from "./model";
+import { CourseColums } from "../../components/table-columns";
+import CourseModal from "./model";
 
-const Groups = () => {
+const Courses = () => {
   const [open, setOpen] = useState(false);
   const [update, setUpdate] = useState<Course | null>(null);
   const [params, setParams] = useState({
@@ -26,13 +27,13 @@ const Groups = () => {
       }));
     }
   }, [location.search]);
-  const { data, useGroupDelete } = useGroup(params);
+  const { data, useCourseDelete } = useCourse(params);
+
   const { handlePagination } = useGeneral();
-  const { mutate: deleteFn, isPending: isDeleting } = useGroupDelete();
+  const { mutate: deleteFn, isPending: isDeleting } = useCourseDelete();
   const deleteItem = (id: number) => {
     deleteFn(id);
   };
-  //butching ikkita va undan ortiq o'zgarishlarni alohida emas hammasini bittada render qilish
   const editItem = (record: Course) => {
     setUpdate(record);
     setOpen(true);
@@ -71,14 +72,14 @@ const Groups = () => {
 
   return (
     <>
-      {open && <CourseModel open={open} toggle={toggle} update={update} />}
-      <h2>GROUPS</h2>
+      {open && <CourseModal open={open} toggle={toggle} update={update} />}
+      <h2>COURSES</h2>
       <Button type="primary" onClick={() => setOpen(true)}>
-        add group
+        add course
       </Button>
       <Table<Course>
         columns={columns}
-        dataSource={data?.data?.data}
+        dataSource={data?.data?.courses}
         rowKey={(row) => row.id!}
         pagination={{
           current: params.page,
@@ -93,4 +94,4 @@ const Groups = () => {
   );
 };
 
-export default Groups;
+export default Courses;

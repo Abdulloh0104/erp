@@ -43,9 +43,11 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
     if (update?.id) {
       updateFn({ ...data, id: update.id });
       console.log("Update Group", { ...data, id: update.id });
+      toggle();
     } else {
       createFn(data);
       console.log("Create Group", data);
+      toggle();
     }
   };
   return (
