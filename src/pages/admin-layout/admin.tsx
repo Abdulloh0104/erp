@@ -9,6 +9,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
+import { PopConfirm } from "@components";
 
 const { Header, Sider, Content } = Layout;
 
@@ -37,7 +38,7 @@ const App: React.FC = () => {
               {
                 key: "admin",
                 icon: <SettingOutlined />,
-                label: "Admin",
+                label: "Group",
               },
               {
                 key: "admin/teacher",
@@ -49,11 +50,22 @@ const App: React.FC = () => {
                 icon: <DribbbleOutlined />,
                 label: "Student",
               },
+              {
+                key: "admin/courses",
+                icon: <DribbbleOutlined />,
+                label: "Courses",
+              },
             ]}
           />
         </Sider>
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Header
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+              display: "flex",
+            }}
+          >
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -64,12 +76,17 @@ const App: React.FC = () => {
                 height: 64,
               }}
             />
+            <h1>Admin Layout</h1>
+            {/* <PopConfirm
+              handleDelete={() => deleteItem(record.id!)}
+              loading={isDeleting}
+            /> */}
           </Header>
           <Content
             style={{
               margin: "24px 16px",
               padding: 24,
-              height: "100vh",
+              height: "120vh",
               // minHeight: 280,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,

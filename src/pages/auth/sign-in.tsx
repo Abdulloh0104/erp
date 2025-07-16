@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setItem } from "@helpers";
 import { useAuth } from "@hooks";
 import {LockOutlined, PaperClipOutlined} from "@ant-design/icons";
@@ -96,7 +96,7 @@ const SignIn: React.FC = () => {
             name="password"
             rules={[{ required: true, message: "Please input your Password!" }]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined />}
               type="password"
               onChange={(e) => setPassword(e.target.value)}
@@ -130,6 +130,7 @@ const SignIn: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
+        Don't have an account <Link to="/register">Reagister</Link>
       </div>
     </div>
   );

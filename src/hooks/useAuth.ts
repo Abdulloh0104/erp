@@ -7,3 +7,9 @@ export const useAuth=()=>{
         mutationFn:async({data,role}:{data:SignIn; role:string})=>authService.signIn(data,role)
     })
 }
+
+// export const useAuthLogOut = () => {  
+//     return useMutation({
+//         mutationFn:async({data,role}:{data:SignIn; role:string})=>authService.signOut(data,role)
+//     })
+// }

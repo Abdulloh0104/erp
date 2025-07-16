@@ -1,15 +1,15 @@
 import { Button, Table, Space, type TablePaginationConfig } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useGeneral, useGroup } from "@hooks";
-import { GroupColums, PopConfirm } from "@components";
-import type { Group } from "@types";
+import { CourseColums, PopConfirm } from "@components";
+import type { Course, } from "@types";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import GroupModel from "./model";
+import CourseModel from "./model";
 
 const Groups = () => {
   const [open, setOpen] = useState(false);
-  const [update, setUpdate] = useState<Group | null>(null);
+  const [update, setUpdate] = useState<Course | null>(null);
   const [params, setParams] = useState({
     page: 1,
     limit: 5,
@@ -20,7 +20,7 @@ const Groups = () => {
     const page = searchParams.get("page");
     const limit = searchParams.get("limit");
     if (page && limit) {
-      setParams(() => ({                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      setParams(() => ({
         page: Number(page),
         limit: Number(limit),
       }));
@@ -33,7 +33,7 @@ const Groups = () => {
     deleteFn(id);
   };
   //butching ikkita va undan ortiq o'zgarishlarni alohida emas hammasini bittada render qilish
-  const editItem = (record: Group) => {
+  const editItem = (record: Course) => {
     setUpdate(record);
     setOpen(true);
   };
@@ -50,11 +50,11 @@ const Groups = () => {
   };
 
   const columns = [
-    ...(GroupColums ?? []),
+    ...(CourseColums ?? []),
     {
       title: "Action",
       key: "action",
-      render: (_: any, record: Group) => (
+      render: (_: any, record: Course) => (
         <Space size="middle">
           <Button type="primary" onClick={() => editItem(record)}>
             <EditOutlined />
@@ -63,7 +63,7 @@ const Groups = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/group/${record.id}`}>view</Link>
+          <Link to={`/admin/courses/${record.id}`}>view</Link>
         </Space>
       ),
     },
@@ -71,14 +71,12 @@ const Groups = () => {
 
   return (
     <>
-      {open && (
-        <GroupModel open={open} toggle={toggle} update={update}/>
-      )}
+      {open && <CourseModel open={open} toggle={toggle} update={update} />}
       <h2>GROUPS</h2>
       <Button type="primary" onClick={() => setOpen(true)}>
         add group
       </Button>
-      <Table<Group>
+      <Table<Course>
         columns={columns}
         dataSource={data?.data?.data}
         rowKey={(row) => row.id!}
