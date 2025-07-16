@@ -1,6 +1,6 @@
 import moment from "moment";
 import { Tag } from "antd";
-import type { Course, Group } from "@types";
+import type { Branch, Course, Group } from "@types";
 import type { TableProps } from "antd";
 // GROUP COLUMNS
 export const GroupColums: TableProps<Group>["columns"] = [
@@ -76,6 +76,37 @@ export const CourseColums: TableProps<Course>["columns"] = [
     render: (value: boolean) => (
       <Tag color={value ? "blue" : "gold"}>{value ? "Active" : "Inactive"}</Tag>
     ),
+  },
+  {
+    title: "Created date",
+    dataIndex: "created_at",
+    key: "created_at",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
+  },
+  {
+    title: "Updated date",
+    dataIndex: "updated_at",
+    key: "updated_at",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
+  },
+];
+
+// GROUP COLUMNS
+export const BranchColums: TableProps<Branch>["columns"] = [
+  {
+    title: "Branch",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address",
+  },
+  {
+    title: "Call number",
+    dataIndex: "call_number",
+    key: "call_number",
   },
   {
     title: "Created date",

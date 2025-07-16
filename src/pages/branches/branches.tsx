@@ -1,15 +1,15 @@
 import { Button, Table, Space, type TablePaginationConfig } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { useCourse, useGeneral } from "@hooks";
-import { PopConfirm, CourseColums } from "@components";
-import type { Course, } from "@types";
+import { useGeneral, useBranch } from "@hooks";
+import { BranchColums, PopConfirm } from "@components";
+import type { Branch } from "@types";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import CourseModal from "./model";
+import BranchModel from "./model";
 
-const Courses = () => {
+const Branches = () => {
   const [open, setOpen] = useState(false);
-  const [update, setUpdate] = useState<Course | null>(null);
+  const [update, setUpdate] = useState<Branch | null>(null);
   const [params, setParams] = useState({
     page: 1,
     limit: 5,
@@ -20,21 +20,21 @@ const Courses = () => {
     const page = searchParams.get("page");
     const limit = searchParams.get("limit");
     if (page && limit) {
-      setParams(() => ({
+      setParams(() => ({                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
         page: Number(page),
         limit: Number(limit),
       }));
     }
   }, [location.search]);
-  const { data, useCourseDelete } = useCourse(params);
-
+  const { data, useBranchDelete } = useBranch(params);
   const { handlePagination } = useGeneral();
-  const { mutate: deleteFn, isPending: isDeleting } = useCourseDelete();
+  const { mutate: deleteFn, isPending: isDeleting } = useBranchDelete();
   const deleteItem = (id: number) => {
     deleteFn(id);
   };
-  const editItem = (record: Course) => {
+  const editItem = (record: Branch) => {
     setUpdate(record);
+    console.log(record);
     setOpen(true);
   };
 
@@ -50,11 +50,11 @@ const Courses = () => {
   };
 
   const columns = [
-    ...(CourseColums ?? []),
+    ...(BranchColums ?? []),
     {
       title: "Action",
       key: "action",
-      render: (_: any, record: Course) => (
+      render: (_: any, record: Branch) => (
         <Space size="middle">
           <Button type="primary" onClick={() => editItem(record)}>
             <EditOutlined />
@@ -63,7 +63,7 @@ const Courses = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/courses/${record.id}`}>view</Link>
+          <Link to={`/admin/branches/${record.id}`}>view</Link>
         </Space>
       ),
     },
@@ -71,14 +71,14 @@ const Courses = () => {
 
   return (
     <>
-      {open && <CourseModal open={open} toggle={toggle} update={update} />}
-      <h2>COURSES</h2>
+      {open && <BranchModel open={open} toggle={toggle} update={update} />}
+      <h2>BRANCHES</h2>
       <Button type="primary" onClick={() => setOpen(true)}>
-        add course
+        add branch
       </Button>
-      <Table<Course>
+      <Table<Branch>
         columns={columns}
-        dataSource={data?.data?.courses}
+        dataSource={data?.data?.branch}
         rowKey={(row) => row.id!}
         pagination={{
           current: params.page,
@@ -93,4 +93,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default Branches;

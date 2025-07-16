@@ -16,6 +16,8 @@ import {
   Worker,
   Courses,
   SingleCourse,
+  Branches,
+  SingleBranch,
 } from "@pages";
 import NotFound from "../pages/not-found/not-found";
 import LoginProtect from "../pages/protect/login-protect";
@@ -48,6 +50,8 @@ const Router = () => {
           <Route path="group/:id" element={<SingleGroup />} />
           <Route path="courses" element={<Courses />} />
           <Route path="courses/:id" element={<SingleCourse />} />
+          <Route path="branches" element={<Branches />} />
+          <Route path="branches/:id" element={<SingleBranch />} />
           <Route path="teacher" element={<TeacherLayout />} />
           <Route path="student" element={<StudentLayout />} />
         </Route>

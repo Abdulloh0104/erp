@@ -11,6 +11,8 @@ const Worker = lazy(() => import("./worker/worker"));
 const Courses = lazy(() => import("./courses/course"));
 const SingleGroup = lazy(() => import("./groups/single-group"));
 const SingleCourse = lazy(() => import("./courses/single-course"));
+const Branches = lazy(() => import("./branches/branches"));
+const SingleBranch = lazy(() => import("./branches/single-group"));
 
 export {
   SignIn,
@@ -22,5 +24,7 @@ export {
   Worker,
   SingleGroup,
   Courses,
-  SingleCourse
+  SingleCourse,
+  Branches,
+  SingleBranch
 };

@@ -2,9 +2,10 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import React, { useState } from "react";
 import {
+  BankOutlined,
   BookOutlined,
+  CodeOutlined,
   DribbbleOutlined,
-  FormOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SettingOutlined,
@@ -59,8 +60,13 @@ const App: React.FC = () => {
               },
               {
                 key: "admin/courses",
-                icon: <FormOutlined />,
+                icon: <CodeOutlined />,
                 label: "Courses",
+              },
+              {
+                key: "admin/branches",
+                icon: <BankOutlined />,
+                label: "Branches",
               },
             ]}
           />
@@ -87,11 +93,7 @@ const App: React.FC = () => {
                   height: 64,
                 }}
               />
-              <span
-                style={{fontSize:"36px" }}
-              >
-                Admin Layout
-              </span>
+              <span style={{ fontSize: "36px" }}>Admin Layout</span>
             </div>
 
             <Button type="primary" danger onClick={handleLogout}>
