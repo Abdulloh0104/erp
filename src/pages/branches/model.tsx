@@ -33,6 +33,7 @@ const BranchModel = ({ open, toggle, update }: BranchProps) => {
     if (update?.id) {
       setValue("name", update.name);
       setValue("address", update.address);
+      console.log("address", update.address);
       setValue("call_number", update.call_number);
     }
   }, [update, setValue]);

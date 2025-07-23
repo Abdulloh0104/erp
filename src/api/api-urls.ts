@@ -12,10 +12,10 @@ export class ApiUrls {
   public static BRANCHES: string = "/branches";
 
   // Teachers
-  public static TEACHERS: string = "/teacher";
+  public static TEACHERS: string = "/teachers";
 
   // Students
-  public static STUDENTS: string = "/student";
+  public static STUDENTS: string = "/students";
 
   // ROOMS
   public static ROOMS: string = "rooms";

@@ -47,17 +47,17 @@ const App: React.FC = () => {
               {
                 key: "admin",
                 icon: <SettingOutlined />,
-                label: "Group",
+                label: "Groups",
               },
               {
                 key: "admin/teacher",
                 icon: <BookOutlined />,
-                label: "Teacher",
+                label: "Teachers",
               },
               {
                 key: "admin/student",
                 icon: <DribbbleOutlined />,
-                label: "Student",
+                label: "Students",
               },
               {
                 key: "admin/courses",

@@ -196,9 +196,12 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
             control={control}
             render={({ field }) => (
               <TimePicker
-                defaultOpenValue={dayjs("00:00:00", "HH:mm")}
-                {...field}
-                value={field.value ? dayjs(field.value) : null}
+                defaultOpenValue={dayjs("00:00", "HH:mm")}
+                value={field.value ? dayjs(field.value, "HH:mm") : null}
+                onChange={(time) => {
+                  // Faqat HH:mm formatini yozamiz
+                  field.onChange(time ? time.format("HH:mm") : null);
+                }}
                 status={errors.start_time ? "error" : ""}
                 placeholder="Start time"
                 format="HH:mm"
