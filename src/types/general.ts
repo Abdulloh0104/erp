@@ -19,3 +19,4 @@ export interface PaginationConfig {
   pagination: TablePaginationConfig;
   setParams: (params: ParamsType) => void;
 }
+

@@ -1,20 +1,36 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { groupService } from "@service";
 import type { Group, ParamsType } from "@types";
-
-export const useGroup = (params:ParamsType,id?:number) => {
+// paramsni ko'rib chiqishim kerak
+export const useGroup = (params?:ParamsType,id?:number) => {
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["groups",params],
-    queryFn: async () => groupService.getGroups(params),
+    queryFn: async () => groupService.getGroups(params!),
   });
   
   const groupStudentsQuery = useQuery({
     enabled:!!id,
-    queryKey: ["group-students", params],
-    queryFn: async () => groupService.getGroupStudents(params,id!),
+    queryKey: ["group-students"],
+    queryFn: async () => groupService.getGroupStudents(id!),
   });
   const students = groupStudentsQuery.data
+  
+  
+  const groupLessonsQuery = useQuery({
+    enabled: !!id,
+    queryKey: ["group-lessons"],
+    queryFn: async () => groupService.getGroupLessons(id!),
+  });
+  const lessons = groupLessonsQuery.data;
+
+  
+  const groupsTeachersQuery = useQuery({
+    enabled: !!id,
+    queryKey: ["group-teachers"],
+    queryFn: async () => groupService.getGroupTeachers(id!),
+  });
+  const teachers = groupsTeachersQuery.data;
   //Mutations
   const useGroupCreate = () => {
     return useMutation({
@@ -45,6 +61,8 @@ export const useGroup = (params:ParamsType,id?:number) => {
   return {
     data,
     students,
+    lessons,
+    teachers,
     useGroupCreate,
     useGroupUpdate,
     useGroupDelete,

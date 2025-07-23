@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import React, { useState } from "react";
 import {
+  AppstoreOutlined,
   BankOutlined,
   BookOutlined,
   CodeOutlined,
@@ -11,7 +12,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
-import { clearStorage } from "../../helpers";
+import { clearStorage } from "@helpers";
 
 const { Header, Sider, Content } = Layout;
 
@@ -67,6 +68,11 @@ const App: React.FC = () => {
                 key: "admin/branches",
                 icon: <BankOutlined />,
                 label: "Branches",
+              },
+              {
+                key: "admin/room",
+                icon: <AppstoreOutlined/>,
+                label: "Rooms",
               },
             ]}
           />

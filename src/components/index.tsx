@@ -3,5 +3,22 @@ import {
   GroupColums,
   CourseColums,
   BranchColums,
-} from "c:/Users/user/Desktop/EDU-ERP/erp - Copy/src/components/table-columns";
-export { PopConfirm, GroupColums, CourseColums, BranchColums };
+  TeacherColums,
+  StudentColums,
+  RoomColums
+} from "./table-columns";
+import GroupLessons from "./group/lessons"
+import GroupStudents from "./group/students";
+import GroupTeachers from "./group/teachers";
+export {
+  PopConfirm,
+  GroupColums,
+  CourseColums,
+  BranchColums,
+  TeacherColums,
+  StudentColums,
+  GroupLessons,
+  GroupStudents,
+  GroupTeachers,
+  RoomColums
+};

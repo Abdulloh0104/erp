@@ -24,6 +24,7 @@ export const courseService = {
       description: model.description,
       price: model.price,
       duration: model.duration,
+      lessons_in_a_month: model.lessons_in_a_month,
       lessons_in_a_week: model.lessons_in_a_week,
       lesson_duration: model.lesson_duration,
       is_active: model.is_active,

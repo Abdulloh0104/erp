@@ -9,8 +9,18 @@ export const groupService = {
     return res;
   },
 
-  async getGroupStudents(params: ParamsType,id:number) {
-    const res = await apiConfig().getRequest(`${ApiUrls.GROUPS}/${id}`, params);
+  async getGroupStudents(id: number) {
+    const res = await apiConfig().getRequest(`${ApiUrls.GROUPS}/${id}`);
+    return res;
+  },
+
+  async getGroupLessons(id: number) {
+    const res = await apiConfig().getRequest(`${ApiUrls.GROUP_LESSONS}/${id}`);
+    return res;
+  },
+
+  async getGroupTeachers(id: number) {
+    const res = await apiConfig().getRequest(`${ApiUrls.GROUP_TEACHERS_BY_GROUP_ID}/${id}`);
     return res;
   },
 
@@ -26,7 +36,9 @@ export const groupService = {
     model = {
       name: model.name,
       status: model.status,
-      course_id: model.course_id,
+      courseId: model.courseId,
+      roomId: model.roomId,
+      start_time: model.start_time,
       start_date: model.start_date,
       end_date: model.end_date,
     };

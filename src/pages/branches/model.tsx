@@ -1,16 +1,19 @@
-import { Button, Form, Input, Modal} from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import type { ModalProps, Branch } from "@types";
-import {useBranch } from "@hooks";
+import { useBranch } from "@hooks";
 import { branchFormSchema } from "@utils";
 interface BranchProps extends ModalProps {
   update: Branch | null;
 }
 
 const BranchModel = ({ open, toggle, update }: BranchProps) => {
-  const { useBranchUpdate, useBranchCreate } = useBranch({ page: 1, limit: 11 });
+  const { useBranchUpdate, useBranchCreate } = useBranch({
+    page: 1,
+    limit: 11,
+  });
   const { mutate: createFn } = useBranchCreate();
   const { mutate: updateFn } = useBranchUpdate();
   const {
@@ -51,8 +54,6 @@ const BranchModel = ({ open, toggle, update }: BranchProps) => {
           toggle(); // 🔁 faqat muvaffaqiyatli bo‘lsa modalni yop
         },
       });
-      console.log("Create Branch", data);
-      toggle();
     }
   };
   return (

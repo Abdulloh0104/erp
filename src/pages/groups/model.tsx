@@ -1,18 +1,19 @@
-import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
+import { Button, DatePicker, Form, Input, Modal, Select, TimePicker, type DatePickerProps } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect} from "react";
-import moment from "moment";
+import { useEffect } from "react";
 import type { ModalProps, Group } from "@types";
-import { useCourse, useGroup } from "@hooks";
+import { useCourse, useGroup, useRoom } from "@hooks";
 import { groupFormSchema } from "@utils";
+import dayjs from "dayjs";
 interface GroupProps extends ModalProps {
   update: Group | null;
 }
 
 const GroupModel = ({ open, toggle, update }: GroupProps) => {
   const { useGroupUpdate, useGroupCreate } = useGroup({ page: 1, limit: 11 });
-  const { data } = useCourse({page:1,limit:11});
+  const { data } = useCourse({ page: 1, limit: 11 });
+  const { data:rooms } = useRoom({ page: 1, limit: 11 });
   const { mutate: createFn } = useGroupCreate();
   const { mutate: updateFn } = useGroupUpdate();
   const {
@@ -25,29 +26,44 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
     defaultValues: {
       name: "",
       status: "",
-      course_id: undefined,
-      start_date:new Date(),
-      end_date:new Date(),
+      courseId: undefined,
+      roomId: undefined,
+      start_date: undefined,
+      start_time:undefined
     },
   });
   useEffect(() => {
     if (update?.id) {
       setValue("name", update.name);
       setValue("status", update.status);
-      setValue("course_id", update.course_id);
-      setValue("start_date",new Date(update.start_date));
-      setValue("end_date",new Date(update.end_date));
+      setValue("courseId", update.courseId);
+      setValue("roomId", update.roomId);
+      setValue("start_time", update.start_time);
+      setValue("start_date", update.start_date);
+      setValue("end_date",update.end_date);
     }
   }, [update, setValue]);
+  const handleChange: DatePickerProps['onChange'] = (date,dateString)=>{
+    console.log(date,dateString);
+  }
   const onSubmit = (data: any) => {
     if (update?.id) {
-      updateFn({ ...data, id: update.id });
-      console.log("Update Group", { ...data, id: update.id });
-      toggle();
+      updateFn(
+        { ...data, id: update.id },
+        {
+          onSuccess: () => {
+            console.log("Update Group", { ...data, id: update.id });
+            toggle();
+          },
+        }
+      );
     } else {
-      createFn(data);
-      console.log("Create Group", data);
-      toggle();
+      createFn(data, {
+        onSuccess: () => {
+          console.log("Create Group", data);
+          toggle();
+        },
+      });
     }
   };
   return (
@@ -109,18 +125,18 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
         </Form.Item>
         <Form.Item
           label="Courses"
-          name="course_id"
-          validateStatus={errors.course_id ? "error" : ""}
-          help={errors.course_id ? errors.course_id.message : ""}
+          name="courseId"
+          validateStatus={errors.courseId ? "error" : ""}
+          help={errors.courseId ? errors.courseId.message : ""}
         >
           <Controller
-            name="course_id"
+            name="courseId"
             control={control}
             render={({ field }) => (
               <Select
                 {...field}
                 showSearch
-                status={errors.status ? "error" : ""}
+                status={errors.courseId ? "error" : ""}
                 placeholder="Select course"
                 optionFilterProp="label"
                 filterSort={(optionA, optionB) =>
@@ -139,6 +155,58 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
           />
         </Form.Item>
         <Form.Item
+          label="Rooms"
+          name="roomId"
+          validateStatus={errors.roomId ? "error" : ""}
+          help={errors.roomId ? errors.roomId.message : ""}
+        >
+          <Controller
+            name="roomId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                showSearch
+                status={errors.roomId ? "error" : ""}
+                placeholder="Select course"
+                optionFilterProp="label"
+                filterSort={(optionA, optionB) =>
+                  (optionA?.label ?? "")
+                    .toLowerCase()
+                    .localeCompare((optionB?.label ?? "").toLocaleLowerCase())
+                }
+                options={rooms?.data?.rooms.map((room: any) => {
+                  return {
+                    value: room.id,
+                    label: room.name,
+                  };
+                })}
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Start time"
+          name="start_time"
+          validateStatus={errors.start_time ? "error" : ""}
+          help={errors.start_time ? errors.start_time.message : ""}
+        >
+          <Controller
+            name="start_time"
+            control={control}
+            render={({ field }) => (
+              <TimePicker
+                defaultOpenValue={dayjs("00:00:00", "HH:mm")}
+                {...field}
+                value={field.value ? dayjs(field.value) : null}
+                status={errors.start_time ? "error" : ""}
+                placeholder="Start time"
+                format="HH:mm"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
           label="Start date"
           name="start_date"
           validateStatus={errors.start_date ? "error" : ""}
@@ -147,32 +215,8 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
           <Controller
             name="start_date"
             control={control}
-            render={({ field }) => (
-              <DatePicker
-                {...field}
-                value={field.value ? moment(field.value) : null}
-                status={errors.start_date ? "error" : ""}
-                placeholder="Start date"
-              />
-            )}
-          />
-        </Form.Item>
-        <Form.Item
-          label="End date"
-          name="end_date"
-          validateStatus={errors.end_date ? "error" : ""}
-          help={errors.end_date ? errors.end_date.message : ""}
-        >
-          <Controller
-            name="end_date"
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                {...field}
-                value={field.value ? moment(field.value) : null}
-                status={errors.end_date ? "error" : ""}
-                placeholder="Start date"
-              />
+            render={() => (
+              <DatePicker onChange={handleChange} placeholder="Start date" />
             )}
           />
         </Form.Item>

@@ -1,6 +1,6 @@
 import moment from "moment";
-import { Tag } from "antd";
-import type { Branch, Course, Group } from "@types";
+import { Tag, Tooltip } from "antd";
+import type { Branch, Course, Group, Room, Student, Teacher } from "@types";
 import type { TableProps } from "antd";
 // GROUP COLUMNS
 export const GroupColums: TableProps<Group>["columns"] = [
@@ -14,6 +14,12 @@ export const GroupColums: TableProps<Group>["columns"] = [
     dataIndex: "course",
     key: "course",
     render: (course: { title: string }) => <span>{course.title}</span>,
+  },
+  {
+    title: "Start time",
+    dataIndex: "start_time ",
+    key: "start_time ",
+    render: (value: string) => moment(value).format("HH:mm"),
   },
   {
     title: "Start date",
@@ -60,6 +66,11 @@ export const CourseColums: TableProps<Course>["columns"] = [
     key: "duration",
   },
   {
+    title: "Lessons in a month",
+    dataIndex: "lessons_in_a_month",
+    key: "lessons_in_a_month",
+  },
+  {
     title: "Lessons in a week",
     dataIndex: "lessons_in_a_week",
     key: "lessons_in_a_week",
@@ -91,7 +102,7 @@ export const CourseColums: TableProps<Course>["columns"] = [
   },
 ];
 
-// GROUP COLUMNS
+// BRANCH COLUMNS
 export const BranchColums: TableProps<Branch>["columns"] = [
   {
     title: "Branch",
@@ -122,4 +133,150 @@ export const BranchColums: TableProps<Branch>["columns"] = [
   },
 ];
 
+// TEACHER COLUMNS
+export const TeacherColums: TableProps<Teacher>["columns"] = [
+  {
+    title: "Photo",
+    dataIndex: "avatar_url",
+    key: "avatar_url",
+    render: (avatar_url: string) => (
+      <img
+        src={avatar_url || "/images/Aicon.jpg"}
+        alt="Avatar"
+        style={{ width: 40, height: 40, borderRadius: "50%" }}
+      />
+    ),
+  },
+  {
+    title: "First name",
+    dataIndex: "first_name",
+    key: "first_name",
+  },
+  {
+    title: "Last name",
+    dataIndex: "last_name",
+    key: "last_name",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+  },
+  {
+    title: "Phone number",
+    dataIndex: "phone",
+    key: "phone",
+  },
+  {
+    title: "Role",
+    dataIndex: "role",
+    key: "role",
+  },
+  {
+    title: "Is active",
+    dataIndex: "is_active",
+    key: "is_active",
+    render: (value: boolean) => (
+      <Tag color={value ? "blue" : "gold"}>{value ? "Active" : "Inactive"}</Tag>
+    ),
+  },
+  {
+    title: "Branches",
+    dataIndex: "branches", // 🔥 TO‘G‘RILANDI
+    key: "branches",
+    render: (branches: Branch[]) => {
+      if (!branches || branches.length === 0) return <span>-</span>;
+
+      const colors = ["green", "blue", "volcano", "magenta", "orange"];
+
+      return (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+          {branches.map((branch, index) => (
+            <Tooltip
+              key={branch.id}
+              title={
+                <>
+                  <div>
+                    <strong>Address:</strong> {branch.address}
+                  </div>
+                  <div>
+                    <strong>Phone:</strong> {branch.call_number}
+                  </div>
+                </>
+              }
+            >
+              <Tag color={colors[index % colors.length]}>{branch.name}</Tag>
+            </Tooltip>
+          ))}
+        </div>
+      );
+    },
+  },
+];
+
 // STUDENT COLUMNS
+export const StudentColums: TableProps<Student>["columns"] = [
+  {
+    title: "First name",
+    dataIndex: "first_name",
+    key: "first_name",
+  },
+  {
+    title: "Last name",
+    dataIndex: "last_name",
+    key: "last_name",
+  },
+  {
+    title: "Phone number",
+    dataIndex: "phone",
+    key: "phone",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+  },
+  {
+    title: "Gender",
+    dataIndex: "gender",
+    key: "gender",
+  },
+  {
+    title: "Birth date",
+    dataIndex: "date_of_birth",
+    key: "date_of_birth",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
+  },
+];
+
+// ROOM COLUMNS
+export const RoomColums: TableProps<Room>["columns"] = [
+  {
+    title: "Room",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Capacity",
+    dataIndex: "capacity",
+    key: "capacity",
+  },
+  {
+    title: "Branch",
+    dataIndex: "branch",
+    key: "branch",
+    render: (branch: { name: string }) => <span>{branch.name}</span>,
+  },
+  {
+    title: "Created date",
+    dataIndex: "created_at",
+    key: "created_at",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
+  },
+  {
+    title: "Updated date",
+    dataIndex: "updated_at",
+    key: "updated_at",
+    render: (value: string) => moment(value).format("M.D.YYYY"),
+  },
+];

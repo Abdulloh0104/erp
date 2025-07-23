@@ -4,8 +4,8 @@ import { useGroup } from "../../hooks"
 
 const SingleGroup=()=>{
     const {id}=useParams<{id:string}>()
-    const {data:student}=useGroup({page:1,limit:10},Number(id))
-    console.log(student);
+    const {students}=useGroup({page:1,limit:10},Number(id))
+    console.log("students",students);
     return(
         <div>
             <h1>Single group</h1>
