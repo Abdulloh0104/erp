@@ -4,7 +4,7 @@ import { useGeneral, useStudent } from "@hooks";
 import { StudentColums, PopConfirm } from "@components";
 import type { Student } from "@types";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import StudentModel from "./model";
 
 const Students = () => {
@@ -63,7 +63,6 @@ const Students = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/student/${record.id}`}>view</Link>
         </Space>
       ),
     },

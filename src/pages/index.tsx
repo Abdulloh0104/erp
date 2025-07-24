@@ -10,15 +10,10 @@ const Groups = lazy(() => import("./groups/groups"));
 const Worker = lazy(() => import("./worker/worker"));
 const Courses = lazy(() => import("./courses/course"));
 const SingleGroup = lazy(() => import("./groups/single-group"));
-const SingleCourse = lazy(() => import("./courses/single-course"));
 const Branches = lazy(() => import("./branches/branches"));
-const SingleBranch = lazy(() => import("./branches/single-group"));
 const Teachers = lazy(() => import("./teachers/teachers"));
-const SingleTeacher = lazy(() => import("./teachers/single-teacher"));
 const Students = lazy(() => import("./students/students"));
-const SingleStudents = lazy(() => import("./students/single-group"));
 const Rooms = lazy(() => import("./rooms/room"));
-const SingleRoom = lazy(() => import("./rooms/single-room"));
 
 export {
   SignIn,
@@ -30,13 +25,8 @@ export {
   Worker,
   SingleGroup,
   Courses,
-  SingleCourse,
   Branches,
-  SingleBranch,
   Teachers,
-  SingleTeacher,
   Students,
-  SingleStudents,
   Rooms,
-  SingleRoom
 };

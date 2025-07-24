@@ -4,7 +4,7 @@ import { useGeneral, useTeacher } from "@hooks";
 import { TeacherColums, PopConfirm } from "@components";
 import type { Teacher } from "@types";
 import { useEffect, useState } from "react";
-import { Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import TeacherModel from "./model";
 
 const Teachers = () => {
@@ -63,7 +63,6 @@ const Teachers = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/teacher/${record.id}`}>view</Link>
         </Space>
       ),
     },
@@ -88,11 +87,7 @@ const Teachers = () => {
           pageSizeOptions: ["4", "5", "6", "7", "10"],
         }}
         onChange={handleTableChange}
-        // onRow={(record) => {
-        //   return {
-        //     onClick: () => navigate(`/admin/teacher/${record.id}`),
-        //   };
-        // }}
+        
       />
     </>
   );

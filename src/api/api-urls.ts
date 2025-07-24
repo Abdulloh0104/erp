@@ -12,13 +12,13 @@ export class ApiUrls {
   public static BRANCHES: string = "/branches";
 
   // Teachers
-  public static TEACHERS: string = "/teachers";
+  public static TEACHERS: string = "/teacher";
 
   // Students
   public static STUDENTS: string = "/students";
 
   // ROOMS
-  public static ROOMS: string = "rooms";
+  public static ROOMS: string = "/rooms";
 
   //LESSON
   public static LESSONS: string = "lessons";

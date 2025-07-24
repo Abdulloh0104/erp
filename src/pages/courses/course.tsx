@@ -4,7 +4,7 @@ import { useCourse, useGeneral } from "@hooks";
 import { PopConfirm, CourseColums } from "@components";
 import type { Course, } from "@types";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import {useLocation } from "react-router-dom";
 import CourseModal from "./model";
 
 const Courses = () => {
@@ -63,7 +63,6 @@ const Courses = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/courses/${record.id}`}>view</Link>
         </Space>
       ),
     },

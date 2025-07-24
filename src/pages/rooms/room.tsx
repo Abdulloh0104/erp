@@ -4,7 +4,7 @@ import { useRoom, useGeneral } from "@hooks";
 import { PopConfirm, RoomColums } from "@components";
 import type { Room, } from "@types";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import {useLocation } from "react-router-dom";
 import RoomModal from "./model";
 
 const Rooms = () => {
@@ -63,7 +63,6 @@ const Rooms = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/room/${record.id}`}>view</Link>
         </Space>
       ),
     },

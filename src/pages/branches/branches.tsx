@@ -4,7 +4,7 @@ import { useGeneral, useBranch } from "@hooks";
 import { BranchColums, PopConfirm } from "@components";
 import type { Branch } from "@types";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import BranchModel from "./model";
 
 const Branches = () => {
@@ -63,7 +63,6 @@ const Branches = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/branches/${record.id}`}>view</Link>
         </Space>
       ),
     },

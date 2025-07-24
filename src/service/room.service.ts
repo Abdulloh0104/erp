@@ -1,5 +1,5 @@
 import { apiConfig } from "@api/config";
-import { ApiUrls } from "../api/api-urls";
+import { ApiUrls } from "@api/api-urls";
 import { Notification } from "@helpers";
 import type { Room, ParamsType } from "@types";
 

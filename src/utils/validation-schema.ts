@@ -6,9 +6,8 @@ export const groupFormSchema = yup.object().shape({
   status: yup.string().required("Status is required"),
   courseId: yup.number().required("Course is required"),
   roomId: yup.number().required("Room is required"),
-  start_time: yup.string().required("Start time is required"),
   start_date: yup.string().required("Start date is required"),
-  end_date: yup.string().required("End date is required"),
+  start_time: yup.string().required("Start time is required"),
 });
 
 // COURSE FORM

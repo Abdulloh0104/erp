@@ -15,15 +15,10 @@ import {
   TeacherLayout,
   Worker,
   Courses,
-  SingleCourse,
   Branches,
-  SingleBranch,
   Teachers,
-  SingleTeacher,
   Students,
-  SingleStudents,
   Rooms,
-  SingleRoom,
 } from "@pages";
 import NotFound from "../pages/not-found/not-found";
 import LoginProtect from "../pages/protect/login-protect";
@@ -55,15 +50,10 @@ const Router = () => {
           <Route index element={<Groups />} />
           <Route path="group/:id" element={<SingleGroup />} />
           <Route path="courses" element={<Courses />} />
-          <Route path="courses/:id" element={<SingleCourse />} />
           <Route path="branches" element={<Branches />} />
-          <Route path="branches/:id" element={<SingleBranch />} />
           <Route path="teacher" element={<Teachers />} />
-          <Route path="teacher/:id" element={<SingleTeacher />} />
           <Route path="student" element={<Students />} />
-          <Route path="student/:id" element={<SingleStudents />} />
           <Route path="room" element={<Rooms />} />
-          <Route path="room/:id" element={<SingleRoom />} />
         </Route>
 
         {/* TEACHER LAYOUT */}

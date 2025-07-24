@@ -130,7 +130,7 @@ const SignIn: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
-        Don't have an account <Link to="/register">Reagister</Link>
+        Don't have an account <Link to="/register">Register</Link>
       </div>
     </div>
   );
