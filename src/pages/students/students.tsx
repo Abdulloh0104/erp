@@ -70,13 +70,13 @@ const Students = () => {
 
   return (
     <>
-      {open && (
-        <StudentModel open={open} toggle={toggle} update={update}/>
-      )}
-      <h2>STUDENTS</h2>
-      <Button type="primary" onClick={() => setOpen(true)}>
-        add student
-      </Button>
+      {open && <StudentModel open={open} toggle={toggle} update={update} />}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Students</h2>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          + Add Student
+        </Button>
+      </div>
       <Table<Student>
         columns={columns}
         dataSource={data?.data?.students}

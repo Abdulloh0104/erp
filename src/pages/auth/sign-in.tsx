@@ -2,14 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setItem } from "@helpers";
 import { useAuth } from "@hooks";
-import {LockOutlined, PaperClipOutlined} from "@ant-design/icons";
-import {
-  Button,
-  Form,
-  Input,
-  Radio,
-  Select,
-} from "antd";
+import { LockOutlined, PaperClipOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Radio, Select } from "antd";
 
 type SizeType = Parameters<typeof Form>[0]["size"];
 
@@ -63,22 +57,76 @@ const SignIn: React.FC = () => {
       >
         <h1 style={{ textAlign: "center" }}>Sign in</h1>
         <Form
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
-          layout="horizontal"
+          layout="vertical" // ✅ label va inputni ustma-ust qiladi
           initialValues={{ size: componentSize }}
           onValuesChange={onFormLayoutChange}
           size="middle"
-          style={{ maxWidth: 600 }}
+          style={{ maxWidth: 600, margin: "0 auto" }} // forma o'rtaga kelsin
         >
-          <Form.Item label="Form Size" name="size">
-            <Radio.Group>
-              <Radio.Button value="small">Small</Radio.Button>
-              <Radio.Button value="default">Default</Radio.Button>
-              <Radio.Button value="large">Large</Radio.Button>
-            </Radio.Group>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please input your Email!" }]}
+          >
+            <Input
+              type="email"
+              prefix={<PaperClipOutlined />}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+            />
           </Form.Item>
 
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Role"
+            name="role"
+            rules={[{ required: true, message: "Please choose one!" }]}
+          >
+            <Select
+              onChange={(value) => setRole(value)}
+              placeholder="Select role"
+            >
+              <Select.Option value="admin">Admin</Select.Option>
+              <Select.Option value="teacher">Teacher</Select.Option>
+              <Select.Option value="student">Student</Select.Option>
+              <Select.Option value="lid">Lid</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item style={{ textAlign: "center" }}>
+            <Button
+              type="primary"
+              onClick={submit}
+              loading={isPending}
+              htmlType="submit"
+              style={{ width: 200 }} // tugma o‘lchami
+            >
+              Log in
+            </Button>
+          </Form.Item>
+        </Form>
+
+        {/* <Form
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 16 }}
+          layout="vertical"
+          initialValues={{ size: componentSize }}
+          onValuesChange={onFormLayoutChange}
+          size="middle"
+          style={{ maxWidth: 600, margin: "0 auto" }}
+        >
           <Form.Item
             label="Email"
             name="email"
@@ -129,8 +177,8 @@ const SignIn: React.FC = () => {
               Log in
             </Button>
           </Form.Item>
-        </Form>
-        Don't have an account <Link to="/register">Register</Link>
+        </Form> */}
+        {/* Don't have an account <Link to="/register">Register</Link> */}
       </div>
     </div>
   );

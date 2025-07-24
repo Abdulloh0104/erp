@@ -71,10 +71,12 @@ const Courses = () => {
   return (
     <>
       {open && <CourseModal open={open} toggle={toggle} update={update} />}
-      <h2>COURSES</h2>
-      <Button type="primary" onClick={() => setOpen(true)}>
-        add course
-      </Button>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Courses</h2>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          + Add Course
+        </Button>
+      </div>
       <Table<Course>
         columns={columns}
         dataSource={data?.data?.courses}

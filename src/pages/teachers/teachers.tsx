@@ -71,10 +71,12 @@ const Teachers = () => {
   return (
     <>
       {open && <TeacherModel open={open} toggle={toggle} update={update} />}
-      <h2>TEACHERS</h2>
-      <Button type="primary" onClick={() => setOpen(true)}>
-        add teacher
-      </Button>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Teachers</h2>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          + Add Teacher
+        </Button>
+      </div>
       <Table<Teacher>
         columns={columns}
         dataSource={data?.data?.teachers}
@@ -87,7 +89,6 @@ const Teachers = () => {
           pageSizeOptions: ["4", "5", "6", "7", "10"],
         }}
         onChange={handleTableChange}
-        
       />
     </>
   );
