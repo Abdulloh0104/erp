@@ -71,10 +71,12 @@ const Rooms = () => {
   return (
     <>
       {open && <RoomModal open={open} toggle={toggle} update={update} />}
-      <h2>ROOMS</h2>
-      <Button type="primary" onClick={() => setOpen(true)}>
-        add room
-      </Button>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Rooms</h2>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          + Add Room
+        </Button>
+      </div>
       <Table<Room>
         columns={columns}
         dataSource={data?.data?.rooms}
