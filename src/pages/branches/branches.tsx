@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import BranchModel from "./model";
 
+
 const Branches = () => {
   const [open, setOpen] = useState(false);
   const [update, setUpdate] = useState<Branch | null>(null);

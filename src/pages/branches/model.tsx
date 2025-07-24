@@ -5,9 +5,11 @@ import { useEffect } from "react";
 import type { ModalProps, Branch } from "@types";
 import { useBranch } from "@hooks";
 import { branchFormSchema } from "@utils";
+import MaskedInput from "antd-mask-input";
 interface BranchProps extends ModalProps {
   update: Branch | null;
 }
+
 
 const BranchModel = ({ open, toggle, update }: BranchProps) => {
   const { useBranchUpdate, useBranchCreate } = useBranch({
@@ -38,6 +40,8 @@ const BranchModel = ({ open, toggle, update }: BranchProps) => {
     }
   }, [update, setValue]);
   const onSubmit = (data: any) => {
+    // console.log(data); 
+    data.call_number=data.call_number.replace(/[^\d+]/g,"")
     if (update?.id) {
       updateFn(
         { ...data, id: update.id },
@@ -118,40 +122,9 @@ const BranchModel = ({ open, toggle, update }: BranchProps) => {
             name="call_number"
             control={control}
             render={({ field }) => (
-              <Input // MASKDAN FOYDAL  ANISH KERAK====================================================================
-                {...field}
-                placeholder="+998 XX XXX XX XX"
-                maxLength={17} // +998 + 9 raqam + 3 space = 17
-                onChange={(e) => {
-                  // Faqat raqamlar
-                  const rawValue = e.target.value.replace(/\D/g, "");
-
-                  // Agar foydalanuvchi +998 ni o‘chirgan bo‘lsa, qayta qo‘shamiz
-                  let number = rawValue.startsWith("998")
-                    ? rawValue.slice(3)
-                    : rawValue;
-
-                  // Formatlash: XX XXX XX XX
-                  let formatted = "";
-                  if (number.length > 0) {
-                    formatted = number.slice(0, 2);
-                  }
-                  if (number.length >= 3) {
-                    formatted += " " + number.slice(2, 5);
-                  }
-                  if (number.length >= 6) {
-                    formatted += " " + number.slice(5, 7);
-                  }
-                  if (number.length >= 8) {
-                    formatted += " " + number.slice(7, 9);
-                  }
-
-                  // Yakuniy qiymat: +998 XX XXX XX XX
-                  const final = `+998 ${formatted}`.trim();
-
-                  field.onChange(final);
-                }}
-                value={field.value || "+998 "} // boshlanishda ko‘rsatish
+              <MaskedInput {...field}
+              mask="+998 (00) 000-00-00"
+              value={update?update.call_number:""}
               />
             )}
           />
