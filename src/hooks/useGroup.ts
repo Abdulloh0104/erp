@@ -43,7 +43,7 @@ export const useGroup = (params?:ParamsType,id?:number) => {
 
   const useGroupUpdate = () => {
     return useMutation({
-      mutationFn: async (data: Group) => groupService.updateGroup(data),
+      mutationFn: async ({ id, data }: { id: number; data: Group }) => groupService.updateGroup(id,data),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["groups"] });
       },

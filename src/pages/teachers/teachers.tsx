@@ -79,7 +79,7 @@ const Teachers = () => {
       </div>
       <Table<Teacher>
         columns={columns}
-        dataSource={data?.data?.teachers}
+        dataSource={data?.data?.data}
         rowKey={(row) => row.id!}
         pagination={{
           current: params.page,

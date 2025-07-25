@@ -20,7 +20,7 @@ export const useStudent = (params:ParamsType) => {
 
   const useStudentUpdate = () => {
     return useMutation({
-      mutationFn: async (data: Student) => studentService.updateStudent(data),
+      mutationFn: async ({ id, data }: { id: number; data: Student }) => studentService.updateStudent(id,data),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["students"] });
       },

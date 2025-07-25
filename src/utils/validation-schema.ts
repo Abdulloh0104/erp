@@ -34,10 +34,10 @@ export const teacherFormSchema = yup.object().shape({
   first_name: yup.string().required("First name is required"),
   last_name: yup.string().required("Last name is required"),
   email: yup.string().required("Email is required"),
-  password: yup.string().required("Password is required"),
+  password: yup.string(),
   phone: yup.string().required("Phone number is required"),
   role: yup.string().required("Role is required"),
-  branchId: yup.number().required("Choose branch"), //------
+  branchId: yup.array().of(yup.number()).required("Choose branch"), //------
   avatar_url:yup.string(),
 });
 

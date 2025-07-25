@@ -31,18 +31,18 @@ export const groupService = {
     return res;
   },
 
-  async updateGroup(model: Group) {
-    const { id } = model;
-    model = {
-      name: model.name,
-      status: model.status,
-      courseId: model.courseId,
-      roomId: model.roomId,
-      start_time: model.start_time,
-      start_date: model.start_date,
-      end_date: model.end_date,
-      end_time: model.end_time,
-    };
+  async updateGroup(id:number,model: Group) {
+    // const { id } = model;
+    // model = {
+    //   name: model.name,
+    //   status: model.status,
+    //   courseId: model.courseId,
+    //   roomId: model.roomId,
+    //   start_time: model.start_time,
+    //   start_date: model.start_date,
+    //   end_date: model.end_date,
+    //   end_time: model.end_time,
+    // };
     // console.log(id);
     const res = await apiConfig().updateRequest(
       `${ApiUrls.GROUPS}/${id}`,

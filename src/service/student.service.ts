@@ -17,17 +17,17 @@ export const studentService = {
     return res;
   },
 
-  async updateStudent(model: Student) {
-    const { id } = model;
-    model = {
-      first_name: model.first_name,
-      last_name: model.last_name,
-      phone: model.phone,
-      email: model.email,
-      password_hash: model.password_hash,
-      gender: model.gender,
-      date_of_birth: model.date_of_birth,
-    };
+  async updateStudent(id:number,model: Student) {
+    // const { id } = model;
+    // model = {
+    //   first_name: model.first_name,
+    //   last_name: model.last_name,
+    //   phone: model.phone,
+    //   email: model.email,
+    //   password_hash: model.password_hash,
+    //   gender: model.gender,
+    //   date_of_birth: model.date_of_birth,
+    // };
     // console.log(id);
     const res = await apiConfig().updateRequest(
       `${ApiUrls.STUDENTS}/${id}`,

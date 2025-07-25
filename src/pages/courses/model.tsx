@@ -47,10 +47,10 @@ const CourseModel = ({ open, toggle, update }: CourseProps) => {
   const onSubmit = (data: any) => {
     if (update?.id) {
       updateFn(
-        { ...data, id: update.id },
+        {id: update.id,data },
         {
           onSuccess: () => {
-            console.log("Update Course", { ...data, id: update.id });
+            console.log("Update Course", { id: update.id,data });
             toggle();
           },
         }
@@ -222,28 +222,6 @@ const CourseModel = ({ open, toggle, update }: CourseProps) => {
             )}
           />
         </Form.Item>
-        {/* <Form.Item
-          label="Is active"
-          name="is_active"
-          validateStatus={errors.is_active ? "error" : ""}
-          help={errors.is_active ? errors.is_active.message : ""}
-        >
-          <Controller
-            name="is_active"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                placeholder="Select is active"
-                status={errors.is_active ? "error" : ""}
-                options={[
-                  { value: "true", label: "active" },
-                  { value: "false", label: "inactive" },
-                ]}
-              />
-            )}
-          />
-        </Form.Item> */}
         <Form.Item
           label="Description"
           name="description"

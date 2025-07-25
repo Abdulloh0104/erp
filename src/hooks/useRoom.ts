@@ -22,7 +22,8 @@ export const useRoom = (params:ParamsType) => {
 
   const useRoomUpdate = () => {
     return useMutation({
-      mutationFn: async (data: Room) => roomService.updateRoom(data),
+      mutationFn: async ({ id, data }: { id: number; data: Room }) =>
+        roomService.updateRoom(id,data),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["rooms"] });
       },

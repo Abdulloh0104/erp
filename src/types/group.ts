@@ -1,4 +1,3 @@
-import type { Course } from "./course";
 import type { Student } from "./student";
 import type { Teacher } from "./teacher";
 
@@ -6,7 +5,7 @@ export interface Group {
   id?: number;
   name: string;
   courseId: number;
-  course?: Course;
+  course: {id:number;title:string};
   roomId: number;
   start_time: string;
   start_date: string;

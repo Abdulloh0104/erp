@@ -34,16 +34,16 @@ const RoomModel = ({ open, toggle, update }: RoomProps) => {
     if (update?.id) {
       setValue("name", update.name);
       setValue("capacity", update.capacity);
-      setValue("branchId", update.branchId);
+      setValue("branchId", update.branch?.id);
     }
   }, [update, setValue]);
   const onSubmit = (data: any) => {
     if (update?.id) {
       updateFn(
-        { ...data, id: update.id },
+        {id: update.id,data },
         {
           onSuccess: () => {
-            console.log("Update Room", { ...data, id: update.id });
+            // console.log("Update Room", { ...data, id: update.id });
             toggle();
           },
         }

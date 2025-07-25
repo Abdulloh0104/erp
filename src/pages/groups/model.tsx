@@ -1,4 +1,14 @@
-import { Button, DatePicker, Form, Input, Modal, Select, TimePicker, type DatePickerProps, type TimePickerProps } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Select,
+  TimePicker,
+  type DatePickerProps,
+  type TimePickerProps,
+} from "antd";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
@@ -11,11 +21,12 @@ interface GroupProps extends ModalProps {
 }
 
 const GroupModel = ({ open, toggle, update }: GroupProps) => {
+  console.log(update);
   const { useGroupUpdate, useGroupCreate } = useGroup({ page: 1, limit: 11 });
   const { mutate: createFn } = useGroupCreate();
   const { mutate: updateFn } = useGroupUpdate();
-  const { data:courses } = useCourse({ page: 1, limit: 11 });
-  const { data:rooms } = useRoom({ page: 1, limit: 11 });
+  const { data: courses } = useCourse({ page: 1, limit: 11 });
+  const { data: rooms } = useRoom({ page: 1, limit: 11 });
   const {
     control,
     handleSubmit,
@@ -29,51 +40,53 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
       courseId: undefined,
       roomId: undefined,
       start_date: undefined,
-      start_time:undefined
+      start_time: undefined,
     },
   });
   useEffect(() => {
     if (update?.id) {
       setValue("name", update.name);
       setValue("status", update.status);
-      setValue("courseId", update.courseId!);
+      setValue("courseId", update?.course?.id);
       setValue("roomId", update.roomId);
-      setValue("start_time",update.start_time  );
+      setValue("start_time", update.start_time);
       setValue("start_date", update.start_date);
-    } 
+    }
   }, [update, setValue]);
-  const handleChange: DatePickerProps['onChange'] = (_,dateString:any)=>{
-    setValue("start_date",dateString)
-  }
-  const handleTimeChange: TimePickerProps["onChange"] = (_,timeString:any) => {
-    console.log("start_time", timeString);
+  const handleChange: DatePickerProps["onChange"] = (_, dateString: any) => {
+    setValue("start_date", dateString);
+  };
+  const handleTimeChange: TimePickerProps["onChange"] = (
+    _,
+    timeString: any
+  ) => {
     setValue("start_time", timeString);
   };
- const onSubmit = (data: any) => {
-   const formattedData = {
-     ...data,
-     start_time: dayjs(data.start_time).format("HH:mm"), // bu yer muhim
-   };
-
-   if (update?.id) {
-     updateFn(
-       { ...formattedData, id: update.id },
-       {
-         onSuccess: () => {
-           console.log("Update Group", { ...formattedData, id: update.id });
-           toggle();
-         },
-       }
-     );
-   } else {
-     createFn(formattedData, {
-       onSuccess: () => {
-         console.log("Create Group", formattedData);
-         toggle();
-       },
-     });
-   }
- };
+  const onSubmit = (data: any) => {
+    console.log("onSubmit", data);
+    const formattedData = {
+      ...data,
+      start_time: dayjs(data.start_time, "HH:mm:ss").format("HH:mm"), // bu yer muhim
+    };
+    if (update?.id) {
+      updateFn(
+        { id: update.id, data: formattedData },
+        {
+          onSuccess: () => {
+            console.log("Update Group", { ...formattedData, id: update.id });
+            toggle();
+          },
+        }
+      );
+    } else {
+      createFn(data, {
+        onSuccess: () => {
+          console.log("Create Group", formattedData);
+          toggle();
+        },
+      });
+    }
+  };
   return (
     <Modal
       title="Group Modal"
@@ -176,7 +189,7 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
                 {...field}
                 showSearch
                 status={errors.roomId ? "error" : ""}
-                placeholder="Select course"
+                placeholder="Select room"
                 optionFilterProp="label"
                 filterSort={(optionA, optionB) =>
                   (optionA?.label ?? "")
@@ -237,7 +250,7 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
                 format={"HH:mm"}
                 defaultOpenValue={dayjs("00:00", "HH:mm")}
                 // value={field.value ? (typeof field.value ==="string" ? (field.value ? dayjs(field.value):null):field.value):null}
-                value={field.value ? dayjs(field.value,"HH:mm"):null}
+                value={field.value ? dayjs(field.value, "HH:mm") : null}
                 onChange={(date, dateString) => {
                   field.onChange(date);
                   handleTimeChange(date, dateString);

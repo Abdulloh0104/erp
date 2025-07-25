@@ -17,20 +17,20 @@ export const courseService = {
     return res;
   },
 
-  async updateCourse(model: Course) {
-    const { id } = model;
-    model = {
-      title: model.title,
-      description: model.description,
-      price: model.price,
-      duration: model.duration,
-      lessons_in_a_month: model.lessons_in_a_month,
-      lessons_in_a_week: model.lessons_in_a_week,
-      lesson_duration: model.lesson_duration,
-      is_active: model.is_active,
-      created_at: model.created_at,
-      updated_at: model.updated_at,
-    };
+  async updateCourse(id:number,model: Course) {
+    // const { id } = model;
+    // model = {
+    //   title: model.title,
+    //   description: model.description,
+    //   price: model.price,
+    //   duration: model.duration,
+    //   lessons_in_a_month: model.lessons_in_a_month,
+    //   lessons_in_a_week: model.lessons_in_a_week,
+    //   lesson_duration: model.lesson_duration,
+    //   is_active: model.is_active,
+    //   created_at: model.created_at,
+    //   updated_at: model.updated_at,
+    // };
     // console.log(id);
     const res = await apiConfig().updateRequest(
       `${ApiUrls.COURSES}/${id}`,

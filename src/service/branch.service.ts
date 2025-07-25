@@ -20,15 +20,15 @@ export const branchService = {
     return res;
   },
 
-  async updateBranch(model: Branch) {
-    const { id } = model;
-    model = {
-      name: model.name,
-      address: model.address,
-      call_number: model.call_number,
-      created_at: model.created_at,
-      updated_at: model.updated_at,
-    };
+  async updateBranch(id:number,model: Branch) {
+    // const { id } = model;
+    // model = {
+    //   name: model.name,
+    //   address: model.address,
+    //   call_number: model.call_number,
+    //   created_at: model.created_at,
+    //   updated_at: model.updated_at,
+    // };
     // console.log(id);
     const res = await apiConfig().updateRequest(
       `${ApiUrls.BRANCHES}/${id}`,

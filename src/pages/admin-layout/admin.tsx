@@ -172,6 +172,7 @@ const App: React.FC = () => {
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="demo-logo-vertical" />
+          <h2 style={{height:"60px",display:"flex", alignItems: "center", justifyContent:"center", color:"#fff", margin:"0 0 25px 0"}}>CRM</h2>
           <Menu
             theme="dark"
             mode="inline"

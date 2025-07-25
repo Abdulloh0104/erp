@@ -2,19 +2,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { branchService } from "@service";
 import type { Branch, ParamsType } from "@types";
 
-export const useBranch = (params:ParamsType,id?:number) => {
+export const useBranch = (params:ParamsType) => {
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["branches",params],
     queryFn: async () => branchService.getBranches(params),
   });
   
-  const branchTeachersQuery = useQuery({
-    enabled:!!id,
-    queryKey: ["branch-students", params],
-    queryFn: async () => branchService.getBranchStudents(params,id!),
-  });
-  const teachers = branchTeachersQuery.data
   //Mutations
   const useBranchCreate = () => {
     return useMutation({
@@ -27,7 +21,7 @@ export const useBranch = (params:ParamsType,id?:number) => {
 
   const useBranchUpdate = () => {
     return useMutation({
-      mutationFn: async (data: Branch) => branchService.updateBranch(data),
+      mutationFn: async ({ id, data }: { id: number; data: Branch }) => branchService.updateBranch(id,data),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["branches"] });
       },
@@ -44,7 +38,6 @@ export const useBranch = (params:ParamsType,id?:number) => {
   };
   return {
     data,
-    teachers,
     useBranchCreate,
     useBranchUpdate,
     useBranchDelete,

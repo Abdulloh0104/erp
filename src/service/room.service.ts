@@ -17,15 +17,15 @@ export const roomService = {
     return res;
   },
 
-  async updateRoom(model: Room) {
-    const { id } = model;
-    model = {
-      name: model.name,
-      capacity: model.capacity,
-      branchId: model.branchId,
-      created_at: model.created_at,
-      updated_at: model.updated_at,
-    };
+  async updateRoom(id:number, model: Room) {
+    // const { id } = model;
+    // model = {
+    //   name: model.name,
+    //   capacity: model.capacity,
+    //   branchId: model.branchId,
+    //   created_at: model.created_at,
+    //   updated_at: model.updated_at,
+    // };
     // console.log(id);
     const res = await apiConfig().updateRequest(
       `${ApiUrls.ROOMS}/${id}`,

@@ -21,7 +21,7 @@ export const useCourse = (params:ParamsType) => {
 
   const useCourseUpdate = () => {
     return useMutation({
-      mutationFn: async (data: Course) => courseService.updateCourse(data),
+      mutationFn: async ({ id, data }: { id: number; data: Course }) => courseService.updateCourse(id,data),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["courses"] });
       },

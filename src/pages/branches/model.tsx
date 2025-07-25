@@ -44,10 +44,10 @@ const BranchModel = ({ open, toggle, update }: BranchProps) => {
     // data.call_number=data.call_number.replace(/[^\d+]/g,"")
     if (update?.id) {
       updateFn(
-        { ...data, id: update.id },
+        {id: update.id,data },
         {
           onSuccess: () => {
-            console.log("Update Branch", { ...data, id: update.id });
+            console.log("Update Branch", { id: update.id,data });
             toggle(); // 🔁 faqat muvaffaqiyatli bo‘lsa modalni yop
           },
         }

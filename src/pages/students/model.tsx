@@ -1,10 +1,20 @@
-import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Select,
+  type DatePickerProps,
+} from "antd";
 import { useForm, Controller } from "react-hook-form";
+import dayjs from "dayjs";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import type { ModalProps, Student } from "@types";
 import { useStudent } from "@hooks";
 import { studentFormSchema } from "@utils";
+import { MaskedInput } from "antd-mask-input";
 interface StudentProps extends ModalProps {
   update: Student | null;
 }
@@ -14,7 +24,6 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
     page: 1,
     limit: 11,
   });
-  // const { data } = useBranch({ page: 1, limit: 11 });
   const { mutate: createFn } = useStudentCreate();
   const { mutate: updateFn } = useStudentUpdate();
   const {
@@ -42,18 +51,21 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
       setValue("email", update.email);
       setValue("phone", update.phone);
       setValue("gender", update.gender);
-      setValue("password_hash", update.password_hash);
+      setValue("password_hash", update.password_hash!);
       setValue("confirm_password", update.confirm_password!);
       setValue("date_of_birth", update.date_of_birth);
     }
   }, [update, setValue]);
+  const handleChange: DatePickerProps["onChange"] = (_, dateString: any) => {
+    setValue("date_of_birth", dateString);
+  };
   const onSubmit = (data: any) => {
     if (update?.id) {
       updateFn(
-        { ...data, id: update.id },
+        { id: update.id, data },
         {
           onSuccess: () => {
-            console.log("Update Student", { ...data, id: update.id });
+            // console.log("Update Student", { ...data, id: update.id });
             toggle();
           },
         }
@@ -149,82 +161,59 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
             name="phone"
             control={control}
             render={({ field }) => (
-              <Input
+              <MaskedInput
                 {...field}
-                placeholder="+998 XX XXX XX XX"
-                maxLength={17} // +998 + 9 raqam + 3 space = 17
-                onChange={(e) => {
-                  // Faqat raqamlar
-                  const rawValue = e.target.value.replace(/\D/g, "");
-
-                  // Agar foydalanuvchi +998 ni o‘chirgan bo‘lsa, qayta qo‘shamiz
-                  let number = rawValue.startsWith("998")
-                    ? rawValue.slice(3)
-                    : rawValue;
-
-                  // Formatlash: XX XXX XX XX
-                  let formatted = "";
-                  if (number.length > 0) {
-                    formatted = number.slice(0, 2);
-                  }
-                  if (number.length >= 3) {
-                    formatted += " " + number.slice(2, 5);
-                  }
-                  if (number.length >= 6) {
-                    formatted += " " + number.slice(5, 7);
-                  }
-                  if (number.length >= 8) {
-                    formatted += " " + number.slice(7, 9);
-                  }
-
-                  // Yakuniy qiymat: +998 XX XXX XX XX
-                  const final = `+998 ${formatted}`.trim();
-
-                  field.onChange(final);
-                }}
-                value={field.value || "+998 "} // boshlanishda ko‘rsatish
+                mask="+998 (00) 000-00-00"
+                value={update ? update.phone : ""}
               />
             )}
           />
         </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password_hash"
-          validateStatus={errors.password_hash ? "error" : ""}
-          help={errors.password_hash ? errors.password_hash.message : ""}
-        >
-          <Controller
-            name="password_hash"
-            control={control}
-            render={({ field }) => (
-              <Input.Password
-                {...field}
-                type="password"
-                status={errors.password_hash ? "error" : ""}
-                placeholder="password_hash"
+        {!update?.id && (
+          <>
+            <Form.Item
+              label="Password"
+              name="password_hash"
+              validateStatus={errors.password_hash ? "error" : ""}
+              help={errors.password_hash ? errors.password_hash.message : ""}
+            >
+              <Controller
+                name="password_hash"
+                control={control}
+                render={({ field }) => (
+                  <Input.Password
+                    {...field}
+                    type="password"
+                    status={errors.password_hash ? "error" : ""}
+                    placeholder="Password"
+                  />
+                )}
               />
-            )}
-          />
-        </Form.Item>
-        <Form.Item
-          label="Confirm your password"
-          name="confirm_password"
-          validateStatus={errors.confirm_password ? "error" : ""}
-          help={errors.confirm_password ? errors.confirm_password.message : ""}
-        >
-          <Controller
-            name="confirm_password"
-            control={control}
-            render={({ field }) => (
-              <Input.Password
-                {...field}
-                type="password"
-                status={errors.confirm_password ? "error" : ""}
-                placeholder="confirm_password"
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm your password"
+              name="confirm_password"
+              validateStatus={errors.confirm_password ? "error" : ""}
+              help={
+                errors.confirm_password ? errors.confirm_password.message : ""
+              }
+            >
+              <Controller
+                name="confirm_password"
+                control={control}
+                render={({ field }) => (
+                  <Input.Password
+                    {...field}
+                    type="password"
+                    status={errors.confirm_password ? "error" : ""}
+                    placeholder="Confirm password"
+                  />
+                )}
               />
-            )}
-          />
-        </Form.Item>
+            </Form.Item>
+          </>
+        )}
         <Form.Item
           label="Gender"
           name="gender"
@@ -259,8 +248,19 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
             render={({ field }) => (
               <DatePicker
                 {...field}
-                value={field.value ? field.value : null}
-                status={errors.date_of_birth ? "error" : ""}
+                value={
+                  field.value
+                    ? typeof field.value === "string"
+                      ? field.value
+                        ? dayjs(field.value)
+                        : null
+                      : field.value
+                    : null
+                }
+                onChange={(date, dateString) => {
+                  field.onChange(date);
+                  handleChange(date, dateString);
+                }}
                 placeholder="Start date"
               />
             )}

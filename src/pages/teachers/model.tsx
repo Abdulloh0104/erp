@@ -10,6 +10,7 @@ interface TeacherProps extends ModalProps {
 }
 
 const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
+  console.log(update);
   const { useTeacherUpdate, useTeacherCreate } = useTeacher({
     page: 1,
     limit: 11,
@@ -31,7 +32,7 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
       phone: "",
       role: "",
       avatar_url: undefined,
-      branchId: undefined,
+      branchId: [],
     },
   });
   useEffect(() => {
@@ -42,13 +43,14 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
       setValue("phone", update.phone);
       setValue("password", update.password);
       setValue("role", update.role);
-      setValue("branchId", update.branchId!);
+      setValue("branchId",  update.branches.map((id:any)=>id.id));
     }
   }, [update, setValue]);
   const onSubmit = (data: any) => {
     if (update?.id) {
+      delete data.password;
       updateFn(
-        { ...data, id: update.id, branchId: [data.branchId] },
+        {id: update.id, data },
         {
           onSuccess: () => {
             console.log("Update Teacher", { ...data, id: update.id });
@@ -195,7 +197,7 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
             name="password"
             control={control}
             render={({ field }) => (
-              <Input
+              <Input.Password
                 {...field}
                 status={errors.password ? "error" : ""}
                 placeholder="Password"
@@ -237,6 +239,7 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
             render={({ field }) => (
               <Select
                 {...field}
+                mode="multiple" //qo'shildi
                 showSearch
                 status={errors.branchId ? "error" : ""}
                 placeholder="Select course"
@@ -246,12 +249,10 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
                     .toLowerCase()
                     .localeCompare((optionB?.label ?? "").toLocaleLowerCase())
                 }
-                options={data?.data?.branch.map((branch: any) => {
-                  return {
+                options={data?.data?.branch.map((branch: any) => ({
                     value: branch.id,
                     label: branch.name,
-                  };
-                })}
+                }))}
               />
             )}
           />
