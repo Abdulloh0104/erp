@@ -40,6 +40,7 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
       setValue("last_name", update.last_name);
       setValue("email", update.email);
       setValue("phone", update.phone);
+      setValue("password", update.password);
       setValue("role", update.role);
       setValue("branchId", update.branchId!);
     }

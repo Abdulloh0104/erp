@@ -11,6 +11,7 @@ export interface Group {
   start_time: string;
   start_date: string;
   end_date: string;
+  end_time:string;
   status: string;
 }
 

@@ -1,4 +1,5 @@
 import moment from "moment";
+import dayjs from "dayjs";
 import { Tag, Tooltip } from "antd";
 import type { Branch, Course, Group, Room, Student, Teacher } from "@types";
 import type { TableProps } from "antd";
@@ -17,9 +18,17 @@ export const GroupColums: TableProps<Group>["columns"] = [
   },
   {
     title: "Start time",
-    dataIndex: "start_time ",
-    key: "start_time ",
-    render: (value: string) => moment(value).format("HH:mm"),
+    dataIndex: "start_time",
+    key: "start_time",
+    render: (value: string) =>
+      value ? dayjs(value, "HH:mm:ss").format("HH:mm") : "-",
+  },
+  {
+    title: "End time",
+    dataIndex: "end_time",
+    key: "end_time",
+    render: (value: string) =>
+      value ? dayjs(value, "HH:mm:ss").format("HH:mm") : "-",
   },
   {
     title: "Start date",
@@ -139,9 +148,9 @@ export const TeacherColums: TableProps<Teacher>["columns"] = [
     title: "Photo",
     dataIndex: "avatar_url",
     key: "avatar_url",
-    render: (avatar_url: string) => (
+    render: () => (
       <img
-        src={avatar_url || "/images/Aicon.jpg"}
+        src={"/images/Aicon.jpg"}
         alt="Avatar"
         style={{ width: 40, height: 40, borderRadius: "50%" }}
       />

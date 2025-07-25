@@ -1,6 +1,5 @@
 import { apiConfig } from "@api/config";
 import { ApiUrls } from "../api/api-urls";
-import { Notification } from "@helpers";
 import type { Branch, ParamsType } from "@types";
 
 export const branchService = {
@@ -16,7 +15,7 @@ export const branchService = {
 
   async createBranch(model: Branch) {
     const res = await apiConfig().postRequest(ApiUrls.BRANCHES, model);
-    Notification("success", res?.data.message);
+    // Notification("success", res?.data.message);
 
     return res;
   },
@@ -44,7 +43,7 @@ export const branchService = {
   async deleteBranch(id: number) {
     const res = await apiConfig().removeRequest(`${ApiUrls.BRANCHES}/${id}`);
     console.log(`${ApiUrls.BRANCHES}/${+id}}`);
-    Notification("success", res?.data.message);
+    // Notification("success", res?.data.message);
 
     return res;
   },

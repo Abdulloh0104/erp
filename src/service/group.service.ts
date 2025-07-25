@@ -41,6 +41,7 @@ export const groupService = {
       start_time: model.start_time,
       start_date: model.start_date,
       end_date: model.end_date,
+      end_time: model.end_time,
     };
     // console.log(id);
     const res = await apiConfig().updateRequest(

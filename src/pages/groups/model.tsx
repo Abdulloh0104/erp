@@ -36,11 +36,10 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
     if (update?.id) {
       setValue("name", update.name);
       setValue("status", update.status);
-      setValue("courseId", update?.courseId);
+      setValue("courseId", update.courseId!);
       setValue("roomId", update.roomId);
       setValue("start_time",update.start_time  );
       setValue("start_date", update.start_date);
-      console.log(update);
     } 
   }, [update, setValue]);
   const handleChange: DatePickerProps['onChange'] = (_,dateString:any)=>{
@@ -50,27 +49,31 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
     console.log("start_time", timeString);
     setValue("start_time", timeString);
   };
-  const onSubmit = (data: any) => {
-    console.log("Data",data);
-    if (update?.id) {
-      updateFn(
-        { ...data, id: update.id },
-        {
-          onSuccess: () => {
-            console.log("Update Group", { ...data, id: update.id });
-            toggle();
-          },
-        }
-      );
-    } else {
-      createFn(data, {
-        onSuccess: () => {
-          console.log("Create Group", data);
-          toggle();
-        },
-      });
-    }
-  };
+ const onSubmit = (data: any) => {
+   const formattedData = {
+     ...data,
+     start_time: dayjs(data.start_time).format("HH:mm"), // bu yer muhim
+   };
+
+   if (update?.id) {
+     updateFn(
+       { ...formattedData, id: update.id },
+       {
+         onSuccess: () => {
+           console.log("Update Group", { ...formattedData, id: update.id });
+           toggle();
+         },
+       }
+     );
+   } else {
+     createFn(formattedData, {
+       onSuccess: () => {
+         console.log("Create Group", formattedData);
+         toggle();
+       },
+     });
+   }
+ };
   return (
     <Modal
       title="Group Modal"
@@ -190,29 +193,6 @@ const GroupModel = ({ open, toggle, update }: GroupProps) => {
             )}
           />
         </Form.Item>
-        {/* <Form.Item
-          label="Start time"
-          name="start_time"
-          validateStatus={errors.start_time ? "error" : ""}
-          help={errors.start_time ? errors.start_time.message : ""}
-        >
-          <Controller
-            name="start_time"
-            control={control}
-            render={({ field }) => (
-              <TimePicker
-                defaultOpenValue={dayjs("00:00", "HH:mm")}
-                value={field.value ? dayjs(field.value, "HH:mm") : null}
-                onChange={(time) => {
-                  // Faqat HH:mm formatini yozamiz
-                  field.onChange(time ? time.format("HH:mm") : null);
-                }}
-                status={errors.start_time ? "error" : ""}
-                placeholder="Start time"
-              />
-            )}
-          />
-        </Form.Item> */}
         <Form.Item
           label="Start date"
           name="start_date"

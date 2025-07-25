@@ -41,7 +41,7 @@ const BranchModel = ({ open, toggle, update }: BranchProps) => {
   }, [update, setValue]);
   const onSubmit = (data: any) => {
     // console.log(data); 
-    data.call_number=data.call_number.replace(/[^\d+]/g,"")
+    // data.call_number=data.call_number.replace(/[^\d+]/g,"")
     if (update?.id) {
       updateFn(
         { ...data, id: update.id },

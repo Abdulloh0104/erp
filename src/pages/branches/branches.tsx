@@ -72,10 +72,12 @@ const Branches = () => {
   return (
     <>
       {open && <BranchModel open={open} toggle={toggle} update={update} />}
-      <h2>BRANCHES</h2>
-      <Button type="primary" onClick={() => setOpen(true)}>
-        add branch
-      </Button>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Branches</h2>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          + Add Branch
+        </Button>
+      </div>
       <Table<Branch>
         columns={columns}
         dataSource={data?.data?.branch}
