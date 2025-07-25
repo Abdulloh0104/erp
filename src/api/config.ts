@@ -6,49 +6,61 @@ export function apiConfig() {
     try {
       const res = await axiosInstance.get(url, { params });
       return res;
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      Notification("error", `${err}`);
+      Notification("error", err?.message);
     }
   }
 
   async function postRequest(url: string, body: object = {}) {
     try {
       const res = await axiosInstance.post(url, body);
-      console.log("body",body);
+      Notification("success", res.data.message);
+      console.log("body", body);
       return res;
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      Notification('error',`${err}`)
+      Notification("error", err?.message);
     }
   }
 
-  async function updateRequest(url: string, body: object = {}) {
+   async function putRequest(url: string, body: object = {}) {
+     try {
+       const res = await axiosInstance.put(url, body);
+       Notification("success", res.data.message);
+       return res;
+     } catch (err: any) {
+       Notification("error", err?.message);
+     }
+   }
+
+  async function patchRequest(url: string, body: object = {}) {
     try {
       const res = await axiosInstance.patch(url, body);
       Notification("success", res?.data?.message);
       return res;
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      Notification("error", `${err}`);
+      Notification("error", err?.message);
     }
   }
 
 
   async function removeRequest(url: string) {
     try {
-      console.log("config",url);
       const res = await axiosInstance.delete(url);
+      Notification("success", res.data.message);
       return res;
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      Notification("error", `${err}`);
+      Notification("error", err?.message);
     }
   }
   return {
     getRequest,
     postRequest,
-    updateRequest,
+    putRequest,
+    patchRequest,
     removeRequest,
   };
 }

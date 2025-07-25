@@ -1,6 +1,5 @@
 import { apiConfig } from "@api/config";
 import { ApiUrls } from "../api/api-urls";
-import { Notification } from "@helpers";
 import type { Student, ParamsType } from "@types";
 
 export const studentService = {
@@ -12,8 +11,6 @@ export const studentService = {
   async createStudent(model: Student) {
     console.log("model", model);
     const res = await apiConfig().postRequest(ApiUrls.STUDENTS, model);
-    Notification("success", res?.data.message);
-
     return res;
   },
 
@@ -29,21 +26,15 @@ export const studentService = {
     //   date_of_birth: model.date_of_birth,
     // };
     // console.log(id);
-    const res = await apiConfig().updateRequest(
+    const res = await apiConfig().patchRequest(
       `${ApiUrls.STUDENTS}/${id}`,
       model
     );
-    // Notification("success", res?.data.message);
-
-    // console.log(res);
     return res;
   },
 
   async deleteStudent(id: number) {
     const res = await apiConfig().removeRequest(`${ApiUrls.STUDENTS}/${id}`);
-    console.log(`${ApiUrls.STUDENTS}/${+id}}`);
-    Notification("success", res?.data.message);
-
     return res;
   },
 };

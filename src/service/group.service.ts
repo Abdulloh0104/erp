@@ -1,6 +1,5 @@
 import { apiConfig } from "@api/config";
 import { ApiUrls } from "../api/api-urls";
-import { Notification } from "@helpers";
 import type { Group, ParamsType } from "@types";
 
 export const groupService = {
@@ -26,8 +25,6 @@ export const groupService = {
 
   async createGroup(model: Group) {
     const res = await apiConfig().postRequest(ApiUrls.GROUPS, model);
-    Notification("success", res?.data.message);
-
     return res;
   },
 
@@ -44,21 +41,16 @@ export const groupService = {
     //   end_time: model.end_time,
     // };
     // console.log(id);
-    const res = await apiConfig().updateRequest(
+    const res = await apiConfig().patchRequest(
       `${ApiUrls.GROUPS}/${id}`,
       model
     );
-    // Notification("success", res?.data.message);
-
-    // console.log(res);
     return res;
   },
 
   async deleteGroup(id: number) {
     const res = await apiConfig().removeRequest(`${ApiUrls.GROUPS}/${id}`);
     console.log(`${ApiUrls.GROUPS}/${+id}}`);
-    Notification("success", res?.data.message);
-
     return res;
   },
 };

@@ -209,9 +209,9 @@ const CourseModel = ({ open, toggle, update }: CourseProps) => {
                 placeholder="Select price for a month"
                 status={errors.price ? "error" : ""}
                 options={[
+                  { value: 1300000, label: "1300000" },
                   { value: 1350000, label: "1350000" },
                   { value: 1400000, label: "1400000" },
-                  { value: 1300000, label: "1300000" },
                   { value: 1600000, label: "1600000" },
                   { value: 1650000, label: "1650000" },
                   { value: 1900000, label: "1900000" },

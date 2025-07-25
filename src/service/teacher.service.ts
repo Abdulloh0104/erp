@@ -1,6 +1,5 @@
 import { apiConfig } from "@api/config";
 import { ApiUrls } from "../api/api-urls";
-import { Notification } from "@helpers";
 import type { Teacher, ParamsType } from "@types";
 
 export const teacherService = {
@@ -19,8 +18,6 @@ export const teacherService = {
 
   async createTeacher(model: Teacher) {
     const res = await apiConfig().postRequest(ApiUrls.TEACHERS, model);
-    Notification("success", res?.data.message);
-
     return res;
   },
 
@@ -37,21 +34,15 @@ export const teacherService = {
     //   avatar_url: model.avatar_url,
     // };
     // console.log(model);
-    const res = await apiConfig().updateRequest(
+    const res = await apiConfig().patchRequest(
       `${ApiUrls.TEACHERS}/${id}`,
       model
     );
-    // Notification("success", res?.data.message);
-
-    console.log("updateTeacher", `${ApiUrls.TEACHERS}/${id}`);
     return res;
   },
 
   async deleteTeacher(id: number) {
     const res = await apiConfig().removeRequest(`${ApiUrls.TEACHERS}/${id}`);
-    console.log(`${ApiUrls.TEACHERS}/${+id}}`);
-    Notification("success", res?.data.message);
-
     return res;
   },
 };

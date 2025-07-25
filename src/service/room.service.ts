@@ -1,6 +1,5 @@
 import { apiConfig } from "@api/config";
 import { ApiUrls } from "@api/api-urls";
-import { Notification } from "@helpers";
 import type { Room, ParamsType } from "@types";
 
 export const roomService = {
@@ -10,10 +9,7 @@ export const roomService = {
   },
 
   async createRoom(model: Room) {
-    console.log("model", model);
     const res = await apiConfig().postRequest(ApiUrls.ROOMS, model);
-    Notification("success", res?.data.message);
-
     return res;
   },
 
@@ -27,21 +23,12 @@ export const roomService = {
     //   updated_at: model.updated_at,
     // };
     // console.log(id);
-    const res = await apiConfig().updateRequest(
-      `${ApiUrls.ROOMS}/${id}`,
-      model
-    );
-    // Notification("success", res?.data.message);
-
-    // console.log(res);
+    const res = await apiConfig().patchRequest(`${ApiUrls.ROOMS}/${id}`, model);
     return res;
   },
 
   async deleteRoom(id: number) {
     const res = await apiConfig().removeRequest(`${ApiUrls.ROOMS}/${id}`);
-    // console.log(`${ApiUrls.ROOMS}/${+id}}`);
-    Notification("success", res?.data.message);
-
     return res;
   },
 };

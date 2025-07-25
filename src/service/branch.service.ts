@@ -15,8 +15,6 @@ export const branchService = {
 
   async createBranch(model: Branch) {
     const res = await apiConfig().postRequest(ApiUrls.BRANCHES, model);
-    // Notification("success", res?.data.message);
-
     return res;
   },
 
@@ -30,21 +28,16 @@ export const branchService = {
     //   updated_at: model.updated_at,
     // };
     // console.log(id);
-    const res = await apiConfig().updateRequest(
+    const res = await apiConfig().patchRequest(
       `${ApiUrls.BRANCHES}/${id}`,
       model
     );
-    // Notification("success", res?.data.message);
-
-    // console.log(res);
     return res;
   },
 
   async deleteBranch(id: number) {
     const res = await apiConfig().removeRequest(`${ApiUrls.BRANCHES}/${id}`);
     console.log(`${ApiUrls.BRANCHES}/${+id}}`);
-    // Notification("success", res?.data.message);
-
     return res;
   },
 };
