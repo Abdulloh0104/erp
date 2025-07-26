@@ -9,7 +9,7 @@ export const courseService = {
   },
 
   async createCourse(model: Course) {
-    console.log("model", model);
+    console.log("model course", model);
     const res = await apiConfig().postRequest(ApiUrls.COURSES, model);
     return res;
   },

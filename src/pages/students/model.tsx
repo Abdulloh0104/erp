@@ -20,6 +20,7 @@ interface StudentProps extends ModalProps {
 }
 
 const StudentModel = ({ open, toggle, update }: StudentProps) => {
+  console.log("update",update);
   const { useStudentUpdate, useStudentCreate } = useStudent({
     page: 1,
     limit: 11,
@@ -70,6 +71,7 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
           },
         }
       );
+      console.log("up",update);
     } else {
       createFn(
         { ...data },

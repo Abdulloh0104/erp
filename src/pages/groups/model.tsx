@@ -21,7 +21,6 @@ interface GroupProps extends ModalProps {
 }
 
 const GroupModel = ({ open, toggle, update }: GroupProps) => {
-  console.log(update);
   const { useGroupUpdate, useGroupCreate } = useGroup({ page: 1, limit: 11 });
   const { mutate: createFn } = useGroupCreate();
   const { mutate: updateFn } = useGroupUpdate();

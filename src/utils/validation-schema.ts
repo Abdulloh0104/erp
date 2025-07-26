@@ -38,7 +38,7 @@ export const teacherFormSchema = yup.object().shape({
   phone: yup.string().required("Phone number is required"),
   role: yup.string().required("Role is required"),
   branchId: yup.array().of(yup.number()).required("Choose branch"), //------
-  avatar_url:yup.string(),
+  avatar_url: yup.string(),
 });
 
 
@@ -50,14 +50,14 @@ export const studentFormSchema = yup.object().shape({
   email: yup.string().email("Email format is invalid (must include @)")
     .required("Email is required"),
   password_hash: yup.string()
-    .required("Password is required")
+    // .required("Password is required")
     .min(8, "Password must be at least 8 characters")
     .matches(/[a-z]/, "Password must contain at least one lowercase letter")
     .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
     .matches(/[0-9]/, "Password must contain at least one number")
     .matches(/[@$!%*?&]/, "Password must contain at least one special character (@, $, !, etc.)"),
-  confirm_password: yup.string().oneOf([yup.ref("password_hash")], "Passwords must match")
-    .required("Please confirm your password"),
+  confirm_password: yup.string().oneOf([yup.ref("password_hash")], "Passwords must match"),
+    // .required("Please confirm your password"),
   gender: yup.string().required("Gender is required"),
   date_of_birth: yup.string().required("Birth date is required"),
 });

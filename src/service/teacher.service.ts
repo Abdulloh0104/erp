@@ -21,19 +21,20 @@ export const teacherService = {
     return res;
   },
 
-  async updateTeacher(id:number,model: any) {
+  async updateTeacher(id:number,model: Teacher) {
     // const { id } = model;
-    // model = {
-    //   first_name: model.first_name,
-    //   last_name: model.last_name,
-    //   email: model.email,
-    //   // password: model.password,
-    //   phone: model.phone,
-    //   role: model.role,
-    //   branchId: model.branchId,
-    //   avatar_url: model.avatar_url,
-    // };
-    // console.log(model);
+      model = {
+        first_name: model.first_name,
+        last_name: model.last_name,
+        email: model.email,
+        password: model.password,
+        phone: model.phone,
+        role: model.role,
+        // branchId: model.branchId,
+        avatar_url: model.avatar_url,
+        branches: model.branches
+    };
+    console.log(model);
     const res = await apiConfig().patchRequest(
       `${ApiUrls.TEACHERS}/${id}`,
       model

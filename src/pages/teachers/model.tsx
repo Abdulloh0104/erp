@@ -41,7 +41,7 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
       setValue("last_name", update.last_name);
       setValue("email", update.email);
       setValue("phone", update.phone);
-      setValue("password", update.password);
+      // setValue("password", update.password!);
       setValue("role", update.role);
       setValue("branchId",  update.branches.map((id:any)=>id.id));
     }
@@ -58,9 +58,10 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
           },
         }
       );
+      console.log(update);
     } else {
       createFn(
-        { ...data, branchId: [data.branchId] },
+        data,
         {
           onSuccess: () => {
             console.log("Create Teacher", data);
@@ -187,7 +188,7 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
             )}
           />
         </Form.Item>
-        <Form.Item
+        {!update?.id && (<Form.Item
           label="Password"
           name="password"
           validateStatus={errors.password ? "error" : ""}
@@ -204,7 +205,7 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
               />
             )}
           />
-        </Form.Item>
+        </Form.Item>)}
         <Form.Item
           label="Role"
           name="role"

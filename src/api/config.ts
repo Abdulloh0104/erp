@@ -19,7 +19,6 @@ export function apiConfig() {
       console.log("body", body);
       return res;
     } catch (err: any) {
-      console.log(err);
       Notification("error", err?.message);
     }
   }

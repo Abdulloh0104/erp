@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { teacherService } from "@service";
-import type { Teacher, ParamsType, Room } from "@types";
+import type { Teacher, ParamsType } from "@types";
 
 export const useTeacher = (params?: ParamsType) => {
   const queryClient = useQueryClient();
@@ -20,7 +20,7 @@ export const useTeacher = (params?: ParamsType) => {
 
   const useTeacherUpdate = () => {
     return useMutation({
-      mutationFn: async ({ id, data }: { id: number; data: Room }) =>
+      mutationFn: async ({ id, data }: { id: number; data: Teacher }) =>
         teacherService.updateTeacher(id, data),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["teachers"] });

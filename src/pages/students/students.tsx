@@ -27,6 +27,7 @@ const Students = () => {
     }
   }, [location.search]);
   const { data, useStudentDelete } = useStudent(params);
+  console.log(data);
   const { handlePagination } = useGeneral();
   const { mutate: deleteFn, isPending: isDeleting } = useStudentDelete();
   const deleteItem = (id: number) => {
@@ -79,7 +80,7 @@ const Students = () => {
       </div>
       <Table<Student>
         columns={columns}
-        dataSource={data?.data?.students}
+        dataSource={data?.data?.data}
         rowKey={(row) => row.id!}
         pagination={{
           current: params.page,
