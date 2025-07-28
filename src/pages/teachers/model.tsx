@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import type { ModalProps, Teacher } from "@types";
 import { useBranch, useTeacher } from "@hooks";
 import { teacherFormSchema } from "@utils";
+import { MaskedInput } from "antd-mask-input";
 interface TeacherProps extends ModalProps {
   update: Teacher | null;
 }
@@ -43,14 +44,17 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
       setValue("phone", update.phone);
       // setValue("password", update.password!);
       setValue("role", update.role);
-      setValue("branchId",  update.branches.map((id:any)=>id.id));
+      setValue(
+        "branchId",
+        update.branches.map((id: any) => id.id)
+      );
     }
   }, [update, setValue]);
   const onSubmit = (data: any) => {
     if (update?.id) {
       delete data.password;
       updateFn(
-        {id: update.id, data },
+        { id: update.id, data },
         {
           onSuccess: () => {
             console.log("Update Teacher", { ...data, id: update.id });
@@ -60,15 +64,12 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
       );
       console.log(update);
     } else {
-      createFn(
-        data,
-        {
-          onSuccess: () => {
-            console.log("Create Teacher", data);
-            toggle();
-          },
-        }
-      );
+      createFn(data, {
+        onSuccess: () => {
+          console.log("Create Teacher", data);
+          toggle();
+        },
+      });
     }
   };
   return (
@@ -150,62 +151,34 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
             name="phone"
             control={control}
             render={({ field }) => (
-              <Input
+              <MaskedInput
                 {...field}
-                placeholder="+998 XX XXX XX XX"
-                maxLength={17} // +998 + 9 raqam + 3 space = 17
-                onChange={(e) => {
-                  // Faqat raqamlar
-                  const rawValue = e.target.value.replace(/\D/g, "");
-
-                  // Agar foydalanuvchi +998 ni o‘chirgan bo‘lsa, qayta qo‘shamiz
-                  let number = rawValue.startsWith("998")
-                    ? rawValue.slice(3)
-                    : rawValue;
-
-                  // Formatlash: XX XXX XX XX
-                  let formatted = "";
-                  if (number.length > 0) {
-                    formatted = number.slice(0, 2);
-                  }
-                  if (number.length >= 3) {
-                    formatted += " " + number.slice(2, 5);
-                  }
-                  if (number.length >= 6) {
-                    formatted += " " + number.slice(5, 7);
-                  }
-                  if (number.length >= 8) {
-                    formatted += " " + number.slice(7, 9);
-                  }
-
-                  // Yakuniy qiymat: +998 XX XXX XX XX
-                  const final = `+998 ${formatted}`.trim();
-
-                  field.onChange(final);
-                }}
-                value={field.value || "+998 "} // boshlanishda ko‘rsatish
+                mask="+998 (00) 000-00-00"
+                value={update ? update.phone : ""}
               />
             )}
           />
         </Form.Item>
-        {!update?.id && (<Form.Item
-          label="Password"
-          name="password"
-          validateStatus={errors.password ? "error" : ""}
-          help={errors.password ? errors.password.message : ""}
-        >
-          <Controller
+        {!update?.id && (
+          <Form.Item
+            label="Password"
             name="password"
-            control={control}
-            render={({ field }) => (
-              <Input.Password
-                {...field}
-                status={errors.password ? "error" : ""}
-                placeholder="Password"
-              />
-            )}
-          />
-        </Form.Item>)}
+            validateStatus={errors.password ? "error" : ""}
+            help={errors.password ? errors.password.message : ""}
+          >
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <Input.Password
+                  {...field}
+                  status={errors.password ? "error" : ""}
+                  placeholder="Password"
+                />
+              )}
+            />
+          </Form.Item>
+        )}
         <Form.Item
           label="Role"
           name="role"
@@ -251,8 +224,8 @@ const TeacherModel = ({ open, toggle, update }: TeacherProps) => {
                     .localeCompare((optionB?.label ?? "").toLocaleLowerCase())
                 }
                 options={data?.data?.branch.map((branch: any) => ({
-                    value: branch.id,
-                    label: branch.name,
+                  value: branch.id,
+                  label: branch.name,
                 }))}
               />
             )}

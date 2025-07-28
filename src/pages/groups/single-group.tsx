@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useGroup } from "../../hooks";
-import { GroupLessons } from "../../components";
+import { useGroup } from "@hooks";
+import { GroupLessons } from "@components";
 // import { useSuspenseQueries } from "@tanstack/react-query";
-// import GroupLessons from "../../components/group/lessons";
 
 const SingleGroup = () => {
   const { id } = useParams<{ id: string }>();
