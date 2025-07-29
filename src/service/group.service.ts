@@ -9,7 +9,7 @@ export const groupService = {
   },
 
   async getGroupStudents(id: number) {
-    const res = await apiConfig().getRequest(`${ApiUrls.GROUPS}/${id}`);
+    const res = await apiConfig().getRequest(`${ApiUrls.GROUP_STUDENTS_BY_GROUP_ID}/${id}`);
     return res;
   },
 

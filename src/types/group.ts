@@ -33,5 +33,5 @@ export interface GroupTeachersType {
 
 
 export interface GroupStudentsType {
-  teachers: Student[];
+  students: Student[];
 }

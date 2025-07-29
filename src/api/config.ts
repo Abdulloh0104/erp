@@ -23,15 +23,15 @@ export function apiConfig() {
     }
   }
 
-   async function putRequest(url: string, body: object = {}) {
-     try {
-       const res = await axiosInstance.put(url, body);
-       Notification("success", res.data.message);
-       return res;
-     } catch (err: any) {
-       Notification("error", err?.message);
-     }
-   }
+  async function putRequest(url: string, body: object = {}) {
+    try {
+      const res = await axiosInstance.put(url, body);
+      Notification("success", res.data.message);
+      return res;
+    } catch (err: any) {
+      Notification("error", err?.message);
+    }
+  }
 
   async function patchRequest(url: string, body: object = {}) {
     try {
@@ -41,9 +41,9 @@ export function apiConfig() {
     } catch (err: any) {
       console.log(err);
       Notification("error", err?.message);
+      throw err;
     }
   }
-
 
   async function removeRequest(url: string) {
     try {
