@@ -101,7 +101,7 @@ const SignIn: React.FC = () => {
               <Select.Option value="admin">Admin</Select.Option>
               <Select.Option value="teacher">Teacher</Select.Option>
               <Select.Option value="student">Student</Select.Option>
-              <Select.Option value="lid">Lid</Select.Option>
+              <Select.Option value="lid">Lead</Select.Option>
             </Select>
           </Form.Item>
 
