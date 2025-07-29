@@ -34,20 +34,34 @@ export const GroupColums: TableProps<Group>["columns"] = [
     title: "Start date",
     dataIndex: "start_date",
     key: "start_date",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
+    render: (value: string) => moment(value).format("DD-MM-YYYY"),
   },
   {
     title: "End date",
     dataIndex: "end_date",
     key: "end_date",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
+    render: (value: string) => moment(value).format("DD-MM-YYYY"),
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
-    render: (value: boolean) => (
-      <Tag color={value ? "blue" : "gold"}>{value ? value : value}</Tag>
+    render: (value: string) => (
+      <Tag
+        color={
+          value === "new"
+            ? "blue"
+            : value === "active"
+            ? "green"
+            : value === "completed"
+            ? "gray"
+            : value === "cancelled"
+            ? "red"
+            : "default"
+        }
+      >
+        {value}
+      </Tag>
     ),
   },
 ];
@@ -96,19 +110,7 @@ export const CourseColums: TableProps<Course>["columns"] = [
     render: (value: boolean) => (
       <Tag color={value ? "blue" : "gold"}>{value ? "Active" : "Inactive"}</Tag>
     ),
-  },
-  {
-    title: "Created date",
-    dataIndex: "created_at",
-    key: "created_at",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
-  },
-  {
-    title: "Updated date",
-    dataIndex: "updated_at",
-    key: "updated_at",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
-  },
+  }
 ];
 
 // BRANCH COLUMNS
@@ -127,19 +129,7 @@ export const BranchColums: TableProps<Branch>["columns"] = [
     title: "Call number",
     dataIndex: "call_number",
     key: "call_number",
-  },
-  {
-    title: "Created date",
-    dataIndex: "created_at",
-    key: "created_at",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
-  },
-  {
-    title: "Updated date",
-    dataIndex: "updated_at",
-    key: "updated_at",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
-  },
+  }
 ];
 
 // TEACHER COLUMNS
@@ -191,33 +181,18 @@ export const TeacherColums: TableProps<Teacher>["columns"] = [
   },
   {
     title: "Branches",
-    dataIndex: "branches", // 🔥 TO‘G‘RILANDI
+    dataIndex: "branches",
     key: "branches",
     render: (branches: Branch[]) => {
       if (!branches || branches.length === 0) return <span>-</span>;
 
-      const colors = ["green", "blue", "volcano", "magenta", "orange"];
+      const firstBranch = branches[0].name;
+      const allBranchNames = branches.map((b) => b.name).join("\n"); // Tooltip uchun: \n bilan ajratilgan
 
       return (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-          {branches.map((branch, index) => (
-            <Tooltip
-              key={branch.id}
-              title={
-                <>
-                  <div>
-                    <strong>Address:</strong> {branch.address}
-                  </div>
-                  <div>
-                    <strong>Phone:</strong> {branch.call_number}
-                  </div>
-                </>
-              }
-            >
-              <Tag color={colors[index % colors.length]}>{branch.name}</Tag>
-            </Tooltip>
-          ))}
-        </div>
+        <Tooltip title={<pre style={{ margin: 0 }}>{allBranchNames}</pre>}>
+          <Tag color="geekblue">{firstBranch}</Tag>
+        </Tooltip>
       );
     },
   },
@@ -254,7 +229,7 @@ export const StudentColums: TableProps<Student>["columns"] = [
     title: "Birth date",
     dataIndex: "date_of_birth",
     key: "date_of_birth",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
+    render: (value: string) => moment(value).format("DD-MM-YYYY"),
   },
 ];
 
@@ -275,17 +250,5 @@ export const RoomColums: TableProps<Room>["columns"] = [
     dataIndex: "branch",
     key: "branch",
     render: (branch: { name: string }) => <span>{branch.name}</span>,
-  },
-  {
-    title: "Created date",
-    dataIndex: "created_at",
-    key: "created_at",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
-  },
-  {
-    title: "Updated date",
-    dataIndex: "updated_at",
-    key: "updated_at",
-    render: (value: string) => moment(value).format("M.D.YYYY"),
-  },
+  }
 ];

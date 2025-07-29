@@ -131,8 +131,8 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom"; // useLocat
 import React, { useState } from "react";
 import {
   AppstoreOutlined,
-  BankOutlined,
   BookOutlined,
+  BranchesOutlined,
   CodeOutlined,
   DribbbleOutlined,
   FolderOpenOutlined,
@@ -201,7 +201,7 @@ const App: React.FC = () => {
               },
               {
                 key: "branches",
-                icon: <BankOutlined />,
+                icon: <BranchesOutlined />,
                 label: "Branches",
               },
               {
@@ -223,7 +223,6 @@ const App: React.FC = () => {
               fontWeight: "bold",
             }}
           >
-            <div>
               <Button
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -234,9 +233,6 @@ const App: React.FC = () => {
                   height: 64,
                 }}
               />
-              <span style={{ fontSize: "36px" }}>Admin Layout</span>
-            </div>
-
             <Button type="primary" danger onClick={handleLogout}>
               Logout
             </Button>
