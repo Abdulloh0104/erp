@@ -19,6 +19,7 @@ import {
   Teachers,
   Students,
   Rooms,
+  AdminProfile,
 } from "@pages";
 import NotFound from "../pages/not-found/not-found";
 import LoginProtect from "../pages/protect/login-protect";
@@ -43,7 +44,8 @@ const Router = () => {
           path="admin"
           element={
             <LayoutProtect>
-              <AdminLayout />
+              {" "}
+              <AdminLayout />{" "}
             </LayoutProtect>
           }
         >
@@ -54,6 +56,7 @@ const Router = () => {
           <Route path="teacher" element={<Teachers />} />
           <Route path="student" element={<Students />} />
           <Route path="room" element={<Rooms />} />
+          <Route path="profile" element={<AdminProfile />} />
         </Route>
 
         {/* TEACHER LAYOUT */}

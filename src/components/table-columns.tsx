@@ -195,7 +195,7 @@ export const TeacherColums: TableProps<Teacher>["columns"] = [
         </Tooltip>
       );
     },
-  },
+  },  
 ];
 
 // STUDENT COLUMNS

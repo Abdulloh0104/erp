@@ -14,6 +14,7 @@ const Branches = lazy(() => import("./branches/branches"));
 const Teachers = lazy(() => import("./teachers/teachers"));
 const Students = lazy(() => import("./students/students"));
 const Rooms = lazy(() => import("./rooms/room"));
+const AdminProfile = lazy(() => import("./admin-layout/profile"));
 
 export {
   SignIn,
@@ -29,4 +30,5 @@ export {
   Teachers,
   Students,
   Rooms,
+  AdminProfile
 };

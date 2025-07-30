@@ -7,7 +7,7 @@ import { Button, Form, Input, Select } from "antd";
 
 type SizeType = Parameters<typeof Form>[0]["size"];
 
-const SignIn: React.FC = () => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");

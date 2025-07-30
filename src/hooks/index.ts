@@ -7,3 +7,4 @@ export * from "./useBranch";
 export * from "./useTeacher";
 export * from "./useStudent";
 export * from "./useRoom";
+export * from "./useAdmin";

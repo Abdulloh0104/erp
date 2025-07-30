@@ -20,3 +20,8 @@ export interface PaginationConfig {
   setParams: (params: ParamsType) => void;
 }
 
+export interface Password {
+  old_password: string;
+  confirm_password: string
+  password: string
+}

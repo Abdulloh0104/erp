@@ -5,3 +5,4 @@ export * from "./branch.service";
 export * from "./teacher.service";
 export * from "./student.service";
 export * from "./room.service";
+export * from "./admin.service";
