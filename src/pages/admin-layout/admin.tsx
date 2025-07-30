@@ -297,6 +297,12 @@ import {
   UserOutlined,
   LogoutOutlined,
   ProfileOutlined,
+  AppstoreOutlined,
+  BranchesOutlined,
+  DribbbleOutlined,
+  CodeOutlined,
+  BookOutlined,
+  FolderOpenOutlined,
 } from "@ant-design/icons";
 import { Button, Dropdown, Layout, theme, Menu } from "antd";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
@@ -386,32 +392,32 @@ const App = () => {
           items={[
             {
               key: "",
-              icon: <MenuFoldOutlined />,
+              icon: <FolderOpenOutlined />,
               label: "Groups",
             },
             {
               key: "teacher",
-              icon: <ProfileOutlined />,
+              icon: <BookOutlined />,
               label: "Teachers",
             },
             {
               key: "student",
-              icon: <UserOutlined />,
+              icon: <DribbbleOutlined />,
               label: "Students",
             },
             {
               key: "courses",
-              icon: <MenuUnfoldOutlined />,
+              icon: <CodeOutlined />,
               label: "Courses",
             },
             {
               key: "branches",
-              icon: <MenuFoldOutlined />,
+              icon: <BranchesOutlined />,
               label: "Branches",
             },
             {
               key: "room",
-              icon: <MenuUnfoldOutlined />,
+              icon: <AppstoreOutlined />,
               label: "Rooms",
             },
           ]}
