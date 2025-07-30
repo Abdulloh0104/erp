@@ -56,7 +56,7 @@ const Rooms = () => {
       key: "action",
       render: (_: any, record: Room) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => editItem(record)}>
+          <Button type="primary" onClick={() => editItem(record)} size="small">
             <EditOutlined />
           </Button>
           <PopConfirm

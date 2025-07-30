@@ -57,7 +57,7 @@ const Branches = () => {
       key: "action",
       render: (_: any, record: Branch) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => editItem(record)}>
+          <Button type="primary" onClick={() => editItem(record)} size="small">
             <EditOutlined />
           </Button>
           <PopConfirm

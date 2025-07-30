@@ -56,17 +56,14 @@ const Groups = () => {
       key: "action",
       render: (_: any, record: Group) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => editItem(record)}>
+          <Button type="primary" onClick={() => editItem(record)} size="small">
             <EditOutlined />
           </Button>
           <PopConfirm
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link
-            to={`/admin/group/${record.id}`}
-            className="border"
-          >
+          <Link to={`/admin/group/${record.id}`} className="border">
             <ImportOutlined />
           </Link>
         </Space>

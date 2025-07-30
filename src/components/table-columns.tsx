@@ -73,11 +73,35 @@ export const CourseColums: TableProps<Course>["columns"] = [
     dataIndex: "title",
     key: "title",
   },
-  {
-    title: "Description",
-    dataIndex: "description",
-    key: "description",
+ {
+  title: "Description",
+  dataIndex: "description",
+  key: "description",
+  render: (branches: string) => {
+    if (!branches) return <span>-</span>;
+
+    const isShort = branches.length <= 30;
+    const preview = branches.slice(0, 30);
+
+    const tagContent = (
+      <span>
+        {preview}
+        {!isShort && "..."}
+      </span>
+    );
+
+    return isShort ? (
+      tagContent
+    ) : (
+      <Tooltip
+        title={<pre className="m-0 whitespace-pre-wrap">{branches}</pre>}
+      >
+        {tagContent}
+      </Tooltip>
+    );
   },
+},
+
   {
     title: "Price",
     dataIndex: "price",
@@ -110,7 +134,7 @@ export const CourseColums: TableProps<Course>["columns"] = [
     render: (value: boolean) => (
       <Tag color={value ? "blue" : "gold"}>{value ? "Active" : "Inactive"}</Tag>
     ),
-  }
+  },
 ];
 
 // BRANCH COLUMNS
@@ -129,7 +153,24 @@ export const BranchColums: TableProps<Branch>["columns"] = [
     title: "Call number",
     dataIndex: "call_number",
     key: "call_number",
-  }
+  },
+  {
+    title: "teachers",
+    dataIndex: "teachers",
+    key: "teachers",
+    render: (teachers: Teacher[]) => {
+      if (!teachers || teachers.length === 0) return <span>-</span>;
+
+      const firstTeacher = teachers[0].first_name;
+      const allTeacherNames = teachers.map((b) => b.first_name).join("\n"); // Tooltip uchun: \n bilan ajratilgan
+
+      return (
+        <Tooltip title={<pre style={{ margin: 0 }}>{allTeacherNames}</pre>}>
+          <span color="geekblue">{firstTeacher}</span>
+        </Tooltip>
+      );
+    },
+  },
 ];
 
 // TEACHER COLUMNS

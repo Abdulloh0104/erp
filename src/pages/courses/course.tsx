@@ -56,7 +56,7 @@ const Courses = () => {
       key: "action",
       render: (_: any, record: Course) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => editItem(record)}>
+          <Button type="primary" onClick={() => editItem(record)} size="small">
             <EditOutlined />
           </Button>
           <PopConfirm
