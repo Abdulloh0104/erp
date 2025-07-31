@@ -8,17 +8,13 @@ const SingleGroup = () => {
     { page: 1, limit: 10 },
     Number(id)
   );
-  console.log("students", students);
-  console.log("lessons", lessons);
-  console.log("teachers", teachers);
-
   return (
     <div>
       <h1>Single group</h1>
       <h1>Id:{id}</h1>
       {teachers?.data.length > 0 && <GroupTeachers teachers={teachers?.data} />}
+      {lessons?.data?.lessons.length > 0 && <GroupLessons lessons={lessons?.data?.lessons} />}
       {students?.data.length > 0 && <GroupStudents students={students?.data} />}
-      {lessons?.data.length > 0 && <GroupLessons lessons={lessons?.data} />}
     </div>
   );
 };

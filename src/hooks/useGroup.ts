@@ -4,6 +4,15 @@ import type { Group, ParamsType } from "@types";
 // paramsni ko'rib chiqishim kerak
 export const useGroup = (params?:ParamsType,id?:number) => {
   const queryClient = useQueryClient();
+  
+  const SingleGroupQuery = useQuery({
+    enabled: !!id, // faqat ID bor bo‘lsa fetch qilinsin
+    queryKey: ["admin", id],
+    queryFn: () => groupService.getGroupById(id!),
+  });
+  
+  
+
   const { data } = useQuery({
     enabled:!id,
     queryKey: ["groups",params],
@@ -65,6 +74,7 @@ export const useGroup = (params?:ParamsType,id?:number) => {
     students,
     lessons,
     teachers,
+    SingleGroupQuery,
     useGroupCreate,
     useGroupUpdate,
     useGroupDelete,

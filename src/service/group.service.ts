@@ -3,13 +3,19 @@ import { ApiUrls } from "../api/api-urls";
 import type { Group, ParamsType } from "@types";
 
 export const groupService = {
+  async getGroupById(id: number): Promise<any> {
+    const res = await apiConfig().getRequest(`${ApiUrls.GROUPS}/${id}`);
+    return res;
+  },
   async getGroups(params: ParamsType) {
     const res = await apiConfig().getRequest(ApiUrls.GROUPS, params);
     return res;
   },
 
   async getGroupStudents(id: number) {
-    const res = await apiConfig().getRequest(`${ApiUrls.GROUP_STUDENTS_BY_GROUP_ID}/${id}`);
+    const res = await apiConfig().getRequest(
+      `${ApiUrls.GROUP_STUDENTS_BY_GROUP_ID}/${id}`
+    );
     return res;
   },
 
@@ -19,7 +25,9 @@ export const groupService = {
   },
 
   async getGroupTeachers(id: number) {
-    const res = await apiConfig().getRequest(`${ApiUrls.GROUP_TEACHERS_BY_GROUP_ID}/${id}`);
+    const res = await apiConfig().getRequest(
+      `${ApiUrls.GROUP_TEACHERS_BY_GROUP_ID}/${id}`
+    );
     return res;
   },
 
@@ -28,7 +36,7 @@ export const groupService = {
     return res;
   },
 
-  async updateGroup(id:number,model: Group) {
+  async updateGroup(id: number, model: Group) {
     const res = await apiConfig().patchRequest(
       `${ApiUrls.GROUPS}/${id}`,
       model

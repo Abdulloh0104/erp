@@ -106,3 +106,10 @@ export const passwordFormSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Passwords must match")
     .required("Please confirm your password"),
 });
+
+// GROUP_LESSON FORM
+export const groupLessonFormSchema = yup.object().shape({
+  note: yup.string().required("Title is required"),
+  status: yup.string().required("Status is required"),
+  date: yup.string().required("Start date is required")
+});

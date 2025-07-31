@@ -1,10 +1,10 @@
 import type { GroupTeachersType } from "@types";
 
-const GroupTeachers = (teachers: GroupTeachersType) => {
+const GroupTeachers = ({teachers}: GroupTeachersType) => {
   console.log("teachers", teachers);
   return (
     <div>
-      <h1>GroupTeachers</h1>
+      <h1>Teachers</h1>
     </div>
   );
 };
