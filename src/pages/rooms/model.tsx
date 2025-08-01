@@ -86,6 +86,12 @@ const RoomModel = ({ open, toggle, update }: RoomProps) => {
                 {...field}
                 status={errors.name ? "error" : ""}
                 placeholder="Room"
+                readOnly={!!update} // agar update mavjud bo‘lsa readonly
+                style={
+                  update
+                    ? { backgroundColor: "#f5f5f5", cursor: "not-allowed" }
+                    : {}
+                }
               />
             )}
           />
@@ -139,7 +145,7 @@ const RoomModel = ({ open, toggle, update }: RoomProps) => {
             )}
           />
         </Form.Item>
-       
+
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit

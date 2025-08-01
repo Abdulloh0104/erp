@@ -162,7 +162,9 @@
 
 // export default LessonsListsModal;
 
-import type { Lessons, ModalProps } from "@types";
+
+
+import type { Lessons, ModalProps} from "@types";
 import { useGeneral } from "@hooks";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -207,7 +209,7 @@ const LessonsModal = ({
 }: LessonsModalProps) => {
   const { useGroupLessonUpdate } = useGeneral();
   const updateMutation = useGroupLessonUpdate();
-  const { mutate: updateFn } = updateMutation;
+  const { mutate: updateFn} = updateMutation;
 
   const {
     control,
@@ -241,22 +243,19 @@ const LessonsModal = ({
   ) => {
     setValue("date", dateString);
   };
+
   const onSubmit = (data: any) => {
     if (!lesson?.id) return;
 
-    const today = dayjs().format("YYYY-MM-DD");
-    const lessonDate = dayjs(data.date).format("YYYY-MM-DD");
+    // Format date properly - handle both dayjs object and string
 
-    // Auto-update status logic
-    let finalStatus = data.status;
-    if (data.status === "new" && lessonDate === today) {
-      finalStatus = "in_progress";
-    }
     const formattedData = {
-      ...data,
-      status: finalStatus,
-      date: dayjs(data.date).format("YYYY-MM-DD"), // bu yer muhim
+      ...data, // Send as 'title' if that's what your API expects
+      status: data.status, // Use status as provided by user
+      date: dayjs(data.date).format("YYYY-MM-DD"),
     };
+
+    console.log("Submitting data:", formattedData); // Debug log
 
     updateFn(
       { id: lesson.id, data: formattedData },
@@ -265,19 +264,15 @@ const LessonsModal = ({
           console.log("Updated lesson:", { ...formattedData, id: lesson.id });
           toggle();
         },
+        onError: (error) => {
+          console.error("Update failed:", error);
+        },
       }
     );
   };
 
   // Get status color for tags
-  const getStatusColor = (status: string, date: string) => {
-    const today = dayjs().format("YYYY-MM-DD");
-    const lessonDate = dayjs(date).format("YYYY-MM-DD");
-
-    if (status === "new" && lessonDate === today) {
-      return "warning";
-    }
-
+  const getStatusColor = (status: string) => {
     switch (status) {
       case "new":
         return "default";
@@ -293,14 +288,7 @@ const LessonsModal = ({
   };
 
   // Get status display text
-  const getStatusText = (status: string, date: string) => {
-    const today = dayjs().format("YYYY-MM-DD");
-    const lessonDate = dayjs(date).format("YYYY-MM-DD");
-
-    if (status === "new" && lessonDate === today) {
-      return "In Progress";
-    }
-
+  const getStatusText = (status: string) => {
     switch (status) {
       case "new":
         return "New";
@@ -348,10 +336,10 @@ const LessonsModal = ({
                 </h3>
                 <Space>
                   <Tag
-                    color={getStatusColor(lesson.status, lesson.date)}
+                    color={getStatusColor(lesson.status)}
                     className="text-sm px-3 py-1"
                   >
-                    {getStatusText(lesson.status, lesson.date)}
+                    {getStatusText(lesson.status)}
                   </Tag>
                   {isToday && <Tag color="orange">Today</Tag>}
                 </Space>
@@ -386,8 +374,8 @@ const LessonsModal = ({
                   </strong>
                 </Descriptions.Item>
                 <Descriptions.Item label="Status">
-                  <Tag color={getStatusColor(lesson.status, lesson.date)}>
-                    {getStatusText(lesson.status, lesson.date)}
+                  <Tag color={getStatusColor(lesson.status)}>
+                    {getStatusText(lesson.status)}
                   </Tag>
                 </Descriptions.Item>
                 <Descriptions.Item label="Note">
@@ -409,7 +397,7 @@ const LessonsModal = ({
             {/* Group & Room Details */}
             <div className="space-y-4">
               {/* Group Information */}
-              {lesson.group && (
+              {lesson.group ? (
                 <Card
                   title={
                     <Space>
@@ -442,10 +430,24 @@ const LessonsModal = ({
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>
+              ) : (
+                <Card
+                  title={
+                    <Space>
+                      <TeamOutlined />
+                      Group Details
+                    </Space>
+                  }
+                  size="small"
+                >
+                  <div className="text-gray-400 italic text-center py-4">
+                    No group information available
+                  </div>
+                </Card>
               )}
 
               {/* Room Information */}
-              {lesson.room && (
+              {lesson.room ? (
                 <Card
                   title={
                     <Space>
@@ -466,6 +468,20 @@ const LessonsModal = ({
                       {lesson.room.branch?.name || "N/A"}
                     </Descriptions.Item>
                   </Descriptions>
+                </Card>
+              ) : (
+                <Card
+                  title={
+                    <Space>
+                      <HomeOutlined />
+                      Room Details
+                    </Space>
+                  }
+                  size="small"
+                >
+                  <div className="text-gray-400 italic text-center py-4">
+                    No room information available
+                  </div>
                 </Card>
               )}
             </div>
@@ -622,7 +638,11 @@ const LessonsModal = ({
             <Button onClick={toggle} size="large">
               Cancel
             </Button>
-            <Button type="primary" htmlType="submit" size="large">
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+            >
               Update Lesson
             </Button>
           </div>

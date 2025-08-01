@@ -76,7 +76,7 @@ export const studentFormSchema = yup.object().shape({
 
 // ROOM FORM
 export const roomFormSchema = yup.object().shape({
-  name: yup.string().min(5).required("Name is required"),
+  name: yup.string().min(2).required("Name is required"),
   capacity: yup.number().required("Capacity is required"),
   branchId: yup.number().required("Branch is required"),
 });
@@ -111,5 +111,5 @@ export const passwordFormSchema = yup.object().shape({
 export const groupLessonFormSchema = yup.object().shape({
   note: yup.string().required("Title is required"),
   status: yup.string().required("Status is required"),
-  date: yup.string().required("Start date is required")
+  date: yup.string().required("Lesson date is required")
 });

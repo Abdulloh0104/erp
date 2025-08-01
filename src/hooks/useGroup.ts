@@ -10,7 +10,7 @@ export const useGroup = (params?:ParamsType,id?:number) => {
     queryKey: ["admin", id],
     queryFn: () => groupService.getGroupById(id!),
   });
-  
+  const singleGroup = SingleGroupQuery.data;
   
 
   const { data } = useQuery({
@@ -71,6 +71,7 @@ export const useGroup = (params?:ParamsType,id?:number) => {
   };
   return {
     data,
+    singleGroup,
     students,
     lessons,
     teachers,

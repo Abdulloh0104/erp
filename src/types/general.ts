@@ -24,13 +24,14 @@ export interface PaginationConfig {
 
 
 export interface Lessons {
-  id:number
-  title: string;
-  notes: string;
+  id?: number;
+  title?: string;
+  notes?: string;
   date: string;
   status: string;
-  group?:Group
-  room?:Room
+  group?: Group;
+  room?: Room;
+  description?:string;
 }
 
 export interface Password {

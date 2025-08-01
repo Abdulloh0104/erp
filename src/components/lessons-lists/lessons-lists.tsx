@@ -107,14 +107,9 @@ const LessonsLists = ({ lessons }: GroupLessonsType) => {
   useEffect(() => {
     if (!containerRef.current || lessons.length === 0) return;
 
-    const inProgressIndex = lessons.findIndex((lesson) => {
-      const today = dayjs().format("YYYY-MM-DD");
-      const lessonDate = dayjs(lesson.date).format("YYYY-MM-DD");
-      return (
-        lesson.status === "in_progress" ||
-        (lesson.status === "new" && lessonDate === today)
-      );
-    });
+    const inProgressIndex = lessons.findIndex(
+      (lesson) => lesson.status === "in_progress"
+    );
 
     if (inProgressIndex !== -1) {
       setTimeout(() => {
@@ -163,15 +158,8 @@ const LessonsLists = ({ lessons }: GroupLessonsType) => {
   };
 
   // Get status color classes
-  const getStatusStyles = (status: string, date: string) => {
-    const today = dayjs().format("YYYY-MM-DD");
-    const lessonDate = dayjs(date).format("YYYY-MM-DD");
-
-    // Auto-update logic: if lesson is today and status is 'new', treat as 'in_progress'
-    const actualStatus =
-      status === "new" && lessonDate === today ? "in_progress" : status;
-
-    switch (actualStatus) {
+  const getStatusStyles = (status: string) => {
+    switch (status) {
       case "new":
         return "bg-gray-400 hover:bg-gray-500";
       case "in_progress":
@@ -217,7 +205,7 @@ const LessonsLists = ({ lessons }: GroupLessonsType) => {
           onClick={goPrev}
           disabled={isStartDisabled()}
           className="flex-shrink-0 shadow-md hover:shadow-lg transition-shadow"
-          size="large"
+          size="small"
         >
           ←
         </Button>
@@ -228,7 +216,7 @@ const LessonsLists = ({ lessons }: GroupLessonsType) => {
           onScroll={handleScroll}
         >
           {lessons.map((lesson: Lessons) => {
-            const statusStyles = getStatusStyles(lesson.status, lesson.date);
+            const statusStyles = getStatusStyles(lesson.status);
             const isToday =
               dayjs(lesson.date).format("YYYY-MM-DD") ===
               dayjs().format("YYYY-MM-DD");
@@ -270,7 +258,7 @@ const LessonsLists = ({ lessons }: GroupLessonsType) => {
           onClick={goNext}
           disabled={isEndDisabled()}
           className="flex-shrink-0 shadow-md hover:shadow-lg transition-shadow"
-          size="large"
+          size="small"
         >
           →
         </Button>

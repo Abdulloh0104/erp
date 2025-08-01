@@ -1,5 +1,5 @@
 import { Button, Table, Space, type TablePaginationConfig } from "antd";
-import { EditOutlined, ImportOutlined } from "@ant-design/icons";
+import { EditOutlined, ExportOutlined} from "@ant-design/icons";
 import { useGeneral, useGroup } from "@hooks";
 import { GroupColums, PopConfirm } from "@components";
 import type { Group } from "@types";
@@ -63,8 +63,8 @@ const Groups = () => {
             handleDelete={() => deleteItem(record.id!)}
             loading={isDeleting}
           />
-          <Link to={`/admin/group/${record.id}`} className="border">
-            <ImportOutlined />
+          <Link to={`/admin/group/${record.id}`}>
+            <Button type="default" size="small"><ExportOutlined/></Button>
           </Link>
         </Space>
       ),

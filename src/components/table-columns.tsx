@@ -64,6 +64,12 @@ export const GroupColums: TableProps<Group>["columns"] = [
       </Tag>
     ),
   },
+  // {
+  //   title: "Room",
+  //   dataIndex: "room",
+  //   key: "room",
+  //   render: (room: { name: string }) => <span>{room.name}</span>,
+  // },
 ];
 
 // COURSE COLUMNS
@@ -179,9 +185,9 @@ export const TeacherColums: TableProps<Teacher>["columns"] = [
     title: "Photo",
     dataIndex: "avatar_url",
     key: "avatar_url",
-    render: () => (
+    render: (avatar_url) => (
       <img
-        src={"/images/Aicon.jpg"}
+        src={avatar_url || "/images/Aicon.jpg"}
         alt="Avatar"
         style={{ width: 40, height: 40, borderRadius: "50%" }}
       />

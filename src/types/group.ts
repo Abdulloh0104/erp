@@ -23,6 +23,24 @@ export interface GroupStudentsType {
   students: Student[];
 }
 
+export interface SingleGroupStudentType {
+  status?: boolean;
+  student: Student;
+}
+
+export interface GroupStudentType {
+  studentData: SingleGroupStudentType[];
+}
+
 export interface GroupTeachersType {
   teachers: Teacher[];
 }
+export interface SingleGroupTeacherType {
+  status?: boolean;
+  teacher: Teacher;
+}
+
+export interface GroupTeacherType {
+  data:SingleGroupTeacherType[];
+}
+
