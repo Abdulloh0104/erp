@@ -460,7 +460,7 @@ const App = () => {
           style={{
             margin: "24px 16px",
             padding: 24,
-            height: "auto",
+            height: "120hv",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}

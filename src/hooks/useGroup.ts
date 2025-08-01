@@ -52,6 +52,15 @@ export const useGroup = (params?:ParamsType,id?:number) => {
     });
   };
 
+    // const useGroupStudentCreate = () => {
+    //   return useMutation({
+    //     mutationFn: async (data:{} ) => groupService.createGroup(data),
+    //     onSuccess: () => {
+    //       queryClient.invalidateQueries({ queryKey: ["groups"] });
+    //     },
+    //   });
+    // };
+
   const useGroupUpdate = () => {
     return useMutation({
       mutationFn: async ({ id, data }: { id: number; data: Group }) => groupService.updateGroup(id,data),
