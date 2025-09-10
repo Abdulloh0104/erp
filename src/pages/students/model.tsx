@@ -40,7 +40,6 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
       phone: "",
       email: "",
       password_hash: "",
-      confirm_password: "",
       gender: "",
       date_of_birth: "",
     },
@@ -53,7 +52,6 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
       setValue("phone", update.phone);
       setValue("gender", update.gender);
       setValue("password_hash", update.password_hash!);
-      setValue("confirm_password", update.confirm_password!);
       setValue("date_of_birth", update.date_of_birth);
     }
   }, [update, setValue]);
@@ -188,28 +186,6 @@ const StudentModel = ({ open, toggle, update }: StudentProps) => {
                     type="password"
                     status={errors.password_hash ? "error" : ""}
                     placeholder="Password"
-                  />
-                )}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Confirm your password"
-              name="confirm_password"
-              validateStatus={errors.confirm_password ? "error" : ""}
-              help={
-                errors.confirm_password ? errors.confirm_password.message : ""
-              }
-            >
-              <Controller
-                name="confirm_password"
-                control={control}
-                render={({ field }) => (
-                  <Input.Password
-                    {...field}
-                    type="password"
-                    status={errors.confirm_password ? "error" : ""}
-                    placeholder="Confirm password"
                   />
                 )}
               />

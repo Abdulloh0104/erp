@@ -44,3 +44,17 @@ export interface GroupTeacherType {
   data:SingleGroupTeacherType[];
 }
 
+export interface GroupStudentCreateType {
+  groupId?: number;
+  studentId: number[];
+  status?: boolean;
+  start_date?: string;
+}
+
+export interface GroupTeacherCreateType {
+  groupId?: number;
+  teacherId: number[];
+  status?: boolean;
+  start_date?: string;
+}
+

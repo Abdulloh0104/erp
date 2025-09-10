@@ -11,7 +11,6 @@
 
 // export default GroupStudents;
 
-
 import { useRef, useEffect, useState } from "react";
 import type { GroupStudentType, Lessons, SingleGroupStudentType } from "@types";
 import { Tooltip, Dropdown, Button, Badge } from "antd";
@@ -67,7 +66,7 @@ const GroupStudents = ({ studentData }: GroupStudentType) => {
     <div className="space-y-6 p-4">
       <h1 className="text-xl font-bold mb-4">Group Students</h1>
 
-      {studentData.map((item: SingleGroupStudentType, index: number) => (
+      {studentData?.map((item: SingleGroupStudentType, index: number) => (
         <div
           key={item.student.id}
           className="flex justify-between items-center bg-white shadow-md border border-gray-200 rounded-xl px-4 py-3"
@@ -87,13 +86,13 @@ const GroupStudents = ({ studentData }: GroupStudentType) => {
 
             <Dropdown
               trigger={["click"]}
-              dropdownRender={() => (
+              popupRender={() => (
                 <div className="p-3 w-[100%] max-w-[600px]">
                   <div
                     className="flex gap-2 overflow-x-auto py-2 scrollbar-hide"
                     ref={containerRef}
                   >
-                    {item.student.attendance.map((lesson: Lessons) => {
+                    {item?.student?.attendance?.map((lesson: Lessons) => {
                       const isToday =
                         dayjs(lesson.date).format("YYYY-MM-DD") ===
                         dayjs().format("YYYY-MM-DD");
@@ -105,12 +104,12 @@ const GroupStudents = ({ studentData }: GroupStudentType) => {
                         >
                           <div
                             className={`min-w-[50px] h-[60px] rounded-lg cursor-pointer 
-                              flex flex-col items-center justify-center text-white text-xs font-medium
-                              transition-all hover:scale-105 ${getStatusColor(
-                                lesson.status
-                              )} 
-                              ${isToday ? "ring-2 ring-black" : ""}
-                            `}
+                                flex flex-col items-center justify-center text-white text-xs font-medium
+                                transition-all hover:scale-105 ${getStatusColor(
+                                  lesson.status
+                                )} 
+                                ${isToday ? "ring-2 ring-black" : ""}
+                              `}
                           >
                             <div className="text-sm font-bold">
                               {dayjs(lesson.date).format("DD")}

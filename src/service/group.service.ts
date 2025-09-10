@@ -1,6 +1,6 @@
 import { apiConfig } from "@api/config";
 import { ApiUrls } from "../api/api-urls";
-import type { Group, ParamsType } from "@types";
+import type { Group, GroupStudentCreateType, GroupTeacherCreateType, ParamsType } from "@types";
 
 export const groupService = {
   async getGroupById(id: number): Promise<any> {
@@ -31,8 +31,19 @@ export const groupService = {
     return res;
   },
 
+  //Mutations
   async createGroup(model: Group) {
     const res = await apiConfig().postRequest(ApiUrls.GROUPS, model);
+    return res;
+  },
+
+  async createGroupStudent(model: GroupStudentCreateType) {
+    const res = await apiConfig().postRequest(ApiUrls.GROUP_STUDENTS, model);
+    return res;
+  },
+
+  async createGroupTeacher(model: GroupTeacherCreateType) {
+    const res = await apiConfig().postRequest(ApiUrls.GROUP_TEACHERS, model);
     return res;
   },
 

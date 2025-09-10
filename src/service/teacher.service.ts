@@ -16,12 +16,20 @@ export const teacherService = {
     return res;
   },
 
+  async getTeacherMyGroups() {
+    const res = await apiConfig().getRequest(
+      `${ApiUrls.GROUP_TEACHERS_MY_GROUPS}`
+    );
+    console.log(`${ApiUrls.GROUP_TEACHERS_MY_GROUPS}`,res);
+    return res;
+  },
+
   async createTeacher(model: Teacher) {
     const res = await apiConfig().postRequest(ApiUrls.TEACHERS, model);
     return res;
   },
 
-  async updateTeacher(id:number,model: Teacher) {
+  async updateTeacher(id: number, model: Teacher) {
     console.log(model);
     const res = await apiConfig().patchRequest(
       `${ApiUrls.TEACHERS}/${id}`,

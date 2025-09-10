@@ -5,9 +5,17 @@ import type { Teacher, ParamsType } from "@types";
 export const useTeacher = (params?: ParamsType) => {
   const queryClient = useQueryClient();
   const { data } = useQuery({
+    enabled: !!params,
     queryKey: ["teachers", params],
     queryFn: async () => teacherService.getTeachers(params!),
   });
+
+  const teacherGroupsQuery = useQuery({
+    queryKey: ["teacher-my-groups"],
+    queryFn: async () => teacherService.getTeacherMyGroups(),
+  });
+  const myGroups = teacherGroupsQuery?.data?.data;
+
   //Mutations
   const useTeacherCreate = () => {
     return useMutation({
@@ -38,6 +46,7 @@ export const useTeacher = (params?: ParamsType) => {
   };
   return {
     data,
+    myGroups,
     useTeacherCreate,
     useTeacherUpdate,
     useTeacherDelete,

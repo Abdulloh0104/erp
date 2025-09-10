@@ -11,16 +11,7 @@
 
 // export default GroupTeachers;
 
-import {
-  Card,
-  Avatar,
-  Space,
-  Tag,
-  Row,
-  Col,
-  Typography,
-  Button,
-} from "antd";
+import { Card, Avatar, Space, Tag, Row, Col, Typography, Button } from "antd";
 import {
   UserOutlined,
   MailOutlined,
@@ -120,7 +111,9 @@ const GroupTeachers = ({ data }: GroupTeacherType) => {
       <Card
         key={teacher.id || index}
         className="border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-200"
-        bodyStyle={{ padding: "16px" }}
+        styles={{
+          body: { padding: "16px" },
+        }}
       >
         <Row gutter={[16, 8]} align="middle">
           {/* Avatar */}
@@ -128,7 +121,7 @@ const GroupTeachers = ({ data }: GroupTeacherType) => {
             <div className="flex justify-center sm:justify-start relative">
               <Avatar
                 size={64}
-                src={teacher.avatar_url || `/public/images/Ablue.png`}
+                src={teacher.avatar_url || `/images/Ablue.png`}
                 icon={<UserOutlined />}
                 className="border-2 border-gray-200"
               />
@@ -173,7 +166,7 @@ const GroupTeachers = ({ data }: GroupTeacherType) => {
                   <MailOutlined className="text-blue-500" />
                   <Text copyable={{ text: teacher.email }}>
                     {teacher.email}
-                  </Text> 
+                  </Text>
                 </Space>
 
                 <Space size="small" className="text-gray-600">
@@ -224,11 +217,13 @@ const GroupTeachers = ({ data }: GroupTeacherType) => {
         </div>
       }
       className="shadow-lg border-0 bg-white"
-      headStyle={{
-        backgroundColor: "#f8fafc",
-        borderBottom: "2px solid #e2e8f0",
-        fontSize: "18px",
-        fontWeight: "bold",
+      styles={{
+        header: {
+          backgroundColor: "#f8fafc",
+          borderBottom: "2px solid #e2e8f0",
+          fontSize: "18px",
+          fontWeight: "bold",
+        },
       }}
     >
       {sortedTeachers && sortedTeachers.length > 0 ? (

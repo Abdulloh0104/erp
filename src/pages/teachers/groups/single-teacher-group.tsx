@@ -35,11 +35,11 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import GroupTeacherModel from "./teacherModel";
+import GroupTeacherModel from "../../groups/teacherModel";
 import { useState } from "react";
-import GroupStudentModel from "./studentModel";
+import GroupStudentModel from "../../groups/studentModel";
 
-const SingleGroup = () => {
+const SingleTeacherGroup = () => {
   const [open, setOpen] = useState(false);
   const [openStudent, setOpenStudent] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -107,7 +107,6 @@ const SingleGroup = () => {
           <div className="flex-1" style={{ width: "60%" }}>
             {teachers?.data.length > 0 ? (
               <>
-                <GroupTeachers data={teachers?.data} />
                 <Button
                   type="primary"
                   onClick={() => addTeachers()}
@@ -116,10 +115,10 @@ const SingleGroup = () => {
                 >
                   + Add Teachers
                 </Button>
+                <GroupTeachers data={teachers?.data} />
               </>
             ) : (
               <>
-                <GroupTeachers data={teachers?.data} />
                 <Button
                   type="primary"
                   onClick={() => addTeachers()}
@@ -128,6 +127,7 @@ const SingleGroup = () => {
                 >
                   + Add Teachers
                 </Button>
+                <GroupTeachers data={teachers?.data} />
               </>
             )}
           </div>
@@ -338,4 +338,4 @@ const SingleGroup = () => {
   );
 };
 
-export default SingleGroup;
+export default SingleTeacherGroup;

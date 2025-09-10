@@ -15,6 +15,8 @@ const Teachers = lazy(() => import("./teachers/teachers"));
 const Students = lazy(() => import("./students/students"));
 const Rooms = lazy(() => import("./rooms/room"));
 const AdminProfile = lazy(() => import("./admin-layout/profile"));
+const TeacherGroups = lazy(() => import("./teachers/groups/teacherGroups"));
+const SingleTeacherGroup = lazy(() => import("./teachers/groups/single-teacher-group"));
 
 export {
   SignIn,
@@ -30,5 +32,7 @@ export {
   Teachers,
   Students,
   Rooms,
-  AdminProfile
+  AdminProfile,
+  TeacherGroups,
+  SingleTeacherGroup,
 };

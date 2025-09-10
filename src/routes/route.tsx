@@ -20,6 +20,8 @@ import {
   Students,
   Rooms,
   AdminProfile,
+  TeacherGroups,
+  SingleTeacherGroup,
 } from "@pages";
 import NotFound from "../pages/not-found/not-found";
 import LoginProtect from "../pages/protect/login-protect";
@@ -67,7 +69,10 @@ const Router = () => {
               <TeacherLayout />
             </LayoutProtect>
           }
-        ></Route>
+        >
+          <Route index element={<TeacherGroups />} />
+          <Route path="group/:id" element={<SingleTeacherGroup />} />
+        </Route>
 
         {/* STUDENT LAYOUT */}
         <Route

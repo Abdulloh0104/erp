@@ -42,7 +42,7 @@ export const teacherFormSchema = yup.object().shape({
   password: yup.string(),
   phone: yup.string().required("Phone number is required"),
   role: yup.string().required("Role is required"),
-  branchId: yup.array().of(yup.number()).required("Choose branch"), //------
+  branchId: yup.array().of(yup.number()).required("Choose branches"), //------
   avatar_url: yup.string(),
 });
 
@@ -66,10 +66,6 @@ export const studentFormSchema = yup.object().shape({
       /[@$!%*?&]/,
       "Password must contain at least one special character (@, $, !, etc.)"
     ),
-  confirm_password: yup
-    .string()
-    .oneOf([yup.ref("password_hash")], "Passwords must match"),
-  // .required("Please confirm your password"),
   gender: yup.string().required("Gender is required"),
   date_of_birth: yup.string().required("Birth date is required"),
 });
@@ -112,4 +108,15 @@ export const groupLessonFormSchema = yup.object().shape({
   note: yup.string().required("Title is required"),
   status: yup.string().required("Status is required"),
   date: yup.string().required("Lesson date is required")
+});
+
+
+export const groupTeacherFormSchema = yup.object().shape({
+  groupId: yup.number(),
+  teacherId: yup.array().of(yup.number()).required("Choose teachers"), //------
+});
+
+export const groupStudentFormSchema = yup.object().shape({
+  groupId: yup.number(),
+  studentId: yup.array().of(yup.number()).required("Choose students"), //------
 });

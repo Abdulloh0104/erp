@@ -1,4 +1,5 @@
 import type { Branch } from "./branch";
+import type { Group } from "./group";
 
 export interface Teacher {
   id?: number;
@@ -11,4 +12,13 @@ export interface Teacher {
   avatar_url: string;
   branchId?: number[];
   branches: Branch[];
+}
+
+
+export interface TeacherGroupsType {
+  id: number;
+  end_date: string;
+  group: Group;
+  start_date: string;
+  status:boolean
 }

@@ -15,7 +15,8 @@ export function apiConfig() {
   async function postRequest(url: string, body: object = {}) {
     try {
       const res = await axiosInstance.post(url, body);
-      Notification("success", res.data.message);
+      console.log("Notification", res.data.message);
+      Notification("success", res.data.message || "Created");
       return res;
     } catch (err: any) {
       Notification("error", err?.message);

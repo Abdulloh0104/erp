@@ -9,7 +9,7 @@ export const studentService = {
   },
 
   async createStudent(model: Student) {
-    console.log("model", model);
+    // console.log("model", model);
     const res = await apiConfig().postRequest(ApiUrls.STUDENTS, model);
     return res;
   },
