@@ -6,8 +6,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const TeacherGroups = () => {
-  const [open, setOpen] = useState(false);
-  const [update, setUpdate] = useState<Group | null>(null);
+  // const [open, setOpen] = useState(false);
+  // const [update, setUpdate] = useState<Group | null>(null);
   const [params, setParams] = useState({
     page: 1,
     limit: 5,
@@ -22,12 +22,12 @@ const TeacherGroups = () => {
   //   setOpen(true);
   // };
 
-  const toggle = () => {
-    setOpen(!open);
-    if (update) {
-      setUpdate(null);
-    }
-  };
+  // const toggle = () => {
+  //   setOpen(!open);
+  //   if (update) {
+  //     setUpdate(null);
+  //   }
+  // };
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     handlePagination({ pagination, setParams });
