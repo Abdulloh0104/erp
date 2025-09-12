@@ -64,8 +64,6 @@ const GroupStudents = ({ studentData }: GroupStudentType) => {
 
   return (
     <div className="space-y-6 p-4">
-      <h1 className="text-xl font-bold mb-4">Group Students</h1>
-
       {studentData?.map((item: SingleGroupStudentType, index: number) => (
         <div
           key={item.student.id}

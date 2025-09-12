@@ -25,12 +25,25 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import type { GroupTeacherType } from "@types";
+import GroupTeacherModel from "../../pages/groups/teacherModel";
+import { useParams } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
 const GroupTeachers = ({ data }: GroupTeacherType) => {
-  console.log("dataTeachers", data);
+  const [open, setOpen] = useState(false);
+  const { id } = useParams<{ id: string }>();
+
+  // console.log("dataTeachers", data);
   const [showAll, setShowAll] = useState(false);
+
+  const addTeachers = () => {
+    setOpen(true);
+  };
+
+  const toggle = () => {
+    setOpen(!open);
+  };
 
   // Sort teachers: active status (true) first, then others
   const sortedTeachers = data
@@ -196,91 +209,107 @@ const GroupTeachers = ({ data }: GroupTeacherType) => {
   };
 
   return (
-    <Card
-      title={
-        <div className="flex justify-between items-center">
-          <Space>
-            <TeamOutlined />
-            <span>Teachers ({sortedTeachers?.length || 0})</span>
-          </Space>
-          {sortedTeachers.length > 2 && (
-            <Button
-              type="text"
-              size="small"
-              onClick={() => setShowAll(!showAll)}
-              icon={showAll ? <UpOutlined /> : <DownOutlined />}
-              className="text-blue-600 hover:text-blue-800"
-            >
-              {showAll ? "Show Less" : `Show All (${remainingCount} more)`}
-            </Button>
-          )}
-        </div>
-      }
-      className="shadow-lg border-0 bg-white"
-      styles={{
-        header: {
-          backgroundColor: "#f8fafc",
-          borderBottom: "2px solid #e2e8f0",
-          fontSize: "18px",
-          fontWeight: "bold",
-        },
-      }}
-    >
-      {sortedTeachers && sortedTeachers.length > 0 ? (
-        <div className="space-y-4">
-          {/* Always visible teachers (first 2) */}
-          {displayedTeachers
-            .slice(0, 2)
-            .map((teacherItem: any, index: number) => (
-              <TeacherCard
-                key={teacherItem.teacher?.id || `teacher-${index}`}
-                teacherItem={teacherItem}
-                index={index}
-              />
-            ))}
+    <>
+      {open && <GroupTeacherModel open={open} toggle={toggle} id={+id!} />}
+      <Card
+        title={
+          <div className="flex justify-between items-center w-full">
+            {/* Left side */}
+            <Space align="center">
+              <TeamOutlined />
+              <span>Teachers ({sortedTeachers?.length || 0})</span>
+            </Space>
 
-          {/* Collapsible section for remaining teachers */}
-          {showAll && sortedTeachers.length > 2 && (
-            <div className="space-y-4 border-t pt-4">
-              <div className="text-sm text-gray-500 font-medium">
-                Additional Teachers
-              </div>
-              {sortedTeachers
-                .slice(2)
-                .map((teacherItem: any, index: number) => (
-                  <TeacherCard
-                    key={teacherItem.teacher?.id || `additional-${index}`}
-                    teacherItem={teacherItem}
-                    index={index + 2}
-                  />
-                ))}
-            </div>
-          )}
-
-          {/* Summary when collapsed */}
-          {!showAll && sortedTeachers.length > 2 && (
-            <div className="text-center py-4 border-t">
-              <Text className="text-gray-500">
-                {remainingCount} more teacher{remainingCount > 1 ? "s" : ""}{" "}
-                available
-              </Text>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="text-center py-8">
-          <div className="text-gray-400 mb-4">
-            <UserOutlined style={{ fontSize: "48px" }} />
+            {/* Right side */}
+            <Space align="center">
+              <Button
+                type="primary"
+                onClick={() => addTeachers()}
+                size="small"
+                className="mb-0"
+              >
+                + Add Teachers
+              </Button>
+              {sortedTeachers.length > 2 && (
+                <Button
+                  type="text"
+                  size="small"
+                  onClick={() => setShowAll(!showAll)}
+                  icon={showAll ? <UpOutlined /> : <DownOutlined />}
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  {showAll ? "Show Less" : `Show All (${remainingCount} more)`}
+                </Button>
+              )}
+            </Space>
           </div>
-          <Title level={4} className="text-gray-400">
-            No Teachers Assigned
-          </Title>
-          <Text className="text-gray-500">
-            This group doesn't have any teachers assigned yet.
-          </Text>
-        </div>
-      )}
-    </Card>
+        }
+        className="shadow-lg border-0 bg-white"
+        styles={{
+          header: {
+            backgroundColor: "#f8fafc",
+            borderBottom: "2px solid #e2e8f0",
+            fontSize: "18px",
+            fontWeight: "bold",
+          },
+        }}  
+      >
+        {sortedTeachers && sortedTeachers.length > 0 ? (
+          <div className="space-y-4">
+            {/* Always visible teachers (first 2) */}
+            {displayedTeachers
+              .slice(0, 2)
+              .map((teacherItem: any, index: number) => (
+                <TeacherCard
+                  key={teacherItem.teacher?.id || `teacher-${index}`}
+                  teacherItem={teacherItem}
+                  index={index}
+                />
+              ))}
+
+            {/* Collapsible section for remaining teachers */}
+            {showAll && sortedTeachers.length > 2 && (
+              <div className="space-y-4 border-t pt-4">
+                <div className="text-sm text-gray-500 font-medium">
+                  Additional Teachers
+                </div>
+                {sortedTeachers
+                  .slice(2)
+                  .map((teacherItem: any, index: number) => (
+                    <TeacherCard
+                      key={teacherItem.teacher?.id || `additional-${index}`}
+                      teacherItem={teacherItem}
+                      index={index + 2}
+                    />
+                  ))}
+              </div>
+            )}
+
+            {/* Summary when collapsed */}
+            {!showAll && sortedTeachers.length > 2 && (
+              <div className="text-center py-4 border-t">
+                <Text className="text-gray-500">
+                  {remainingCount} more teacher{remainingCount > 1 ? "s" : ""}{" "}
+                  available
+                </Text>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <div className="text-gray-400 mb-4">
+              <UserOutlined style={{ fontSize: "48px" }} />
+            </div>
+            <Title level={4} className="text-gray-400">
+              No Teachers Assigned
+            </Title>
+            <Text className="text-gray-500">
+              This group doesn't have any teachers assigned yet.
+            </Text>
+          </div>
+        )}
+      </Card>
+    </>
   );
 };
 

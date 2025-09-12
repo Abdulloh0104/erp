@@ -113,7 +113,7 @@ const SingleTeacherGroup = () => {
                   size="small"
                   className="mb-3"
                 >
-                  + Add Teachers
+                  + Add TeacherS
                 </Button>
                 <GroupTeachers data={teachers?.data} />
               </>

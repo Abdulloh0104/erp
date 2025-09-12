@@ -26,7 +26,7 @@
 import { useParams } from "react-router-dom";
 import { useGroup } from "@hooks";
 import { GroupLessons, GroupStudents, GroupTeachers } from "@components";
-import { Card, Descriptions, Tag, Space, Button } from "antd";
+import { Card, Descriptions, Tag, Space, Button, Typography } from "antd";
 import {
   TeamOutlined,
   BookOutlined,
@@ -35,12 +35,11 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import GroupTeacherModel from "./teacherModel";
 import { useState } from "react";
 import GroupStudentModel from "./studentModel";
+const { Text, Title } = Typography;
 
 const SingleGroup = () => {
-  const [open, setOpen] = useState(false);
   const [openStudent, setOpenStudent] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { students, lessons, teachers, singleGroup } = useGroup(
@@ -65,13 +64,6 @@ const SingleGroup = () => {
         return "default";
     }
   };
-  const addTeachers = () => {
-    setOpen(true);
-  };
-
-  const toggle = () => {
-    setOpen(!open);
-  };
 
   const addStudents = () => {
     setOpenStudent(true);
@@ -83,7 +75,7 @@ const SingleGroup = () => {
 
   return (
     <>
-      {open && <GroupTeacherModel open={open} toggle={toggle} id={+id!} />}
+      {/* {open && <GroupTeacherModel open={open} toggle={toggle} id={+id!} />} */}
       {openStudent && (
         <GroupStudentModel
           openStudent={openStudent}
@@ -105,31 +97,7 @@ const SingleGroup = () => {
         <div className="flex gap-6 mb-8">
           {/* Left Side - Teachers (60% width) */}
           <div className="flex-1" style={{ width: "60%" }}>
-            {teachers?.data.length > 0 ? (
-              <>
-                <GroupTeachers data={teachers?.data} />
-                <Button
-                  type="primary"
-                  onClick={() => addTeachers()}
-                  size="small"
-                  className="mb-3"
-                >
-                  + Add Teachers
-                </Button>
-              </>
-            ) : (
-              <>
-                <GroupTeachers data={teachers?.data} />
-                <Button
-                  type="primary"
-                  onClick={() => addTeachers()}
-                  size="small"
-                  className="mb-3"
-                >
-                  + Add Teachers
-                </Button>
-              </>
-            )}
+            <GroupTeachers data={teachers?.data} />
           </div>
 
           {/* Right Side - Group Info (35% width) */}
@@ -287,24 +255,27 @@ const SingleGroup = () => {
               <GroupLessons lessons={lessons?.data?.lessons} />
             </Card>
           )}
-
+          <br />
           {/* Students Section */}
           {students?.data.length > 0 ? (
             <Card
               title={
-                <Space>
-                  <div>
+                <div className="flex justify-between items-center w-full ">
+                  <Space align="center">
                     <UserOutlined />
-                    Group Students
-                  </div>
-                  <Button
-                    type="primary"
-                    onClick={() => addStudents()}
-                    size="small"
-                  >
-                    + Add Students
-                  </Button>
-                </Space>
+                    <span>Students ({students?.data?.length || 0})</span>
+                  </Space>
+                  <Space align="center">
+                    <Button
+                      type="primary"
+                      onClick={() => addStudents()}
+                      size="small"
+                      className="mb-0"
+                    >
+                      + Add Students
+                    </Button>
+                  </Space>
+                </div>
               }
               className="shadow-lg border-0"
             >
@@ -313,23 +284,36 @@ const SingleGroup = () => {
           ) : (
             <Card
               title={
-                <Space className="flex justify-between">
-                  <div>
+                <div className="flex justify-between items-center w-full">
+                  <Space align="center">
                     <UserOutlined />
-                    Group Students
-                  </div>
-                  <Button
-                    type="primary"
-                    onClick={() => addStudents()}
-                    size="small"
-                  >
-                    + Add Students
-                  </Button>
-                </Space>
+                    <span>Students</span>
+                  </Space>
+                  <Space align="center">
+                    <Button
+                      type="primary"
+                      onClick={() => addStudents()}
+                      size="small"
+                      className="mb-0"
+                    >
+                      + Add Students
+                    </Button>
+                  </Space>
+                </div>
               }
               className="shadow-lg border-0"
             >
-              <GroupStudents studentData={students?.data} />
+              <div className="text-center py-8">
+                <div className="text-gray-400 mb-4">
+                  <UserOutlined style={{ fontSize: "48px" }} />
+                </div>
+                <Title level={4} className="text-gray-400">
+                  No Students Assigned
+                </Title>
+                <Text className="text-gray-500">
+                  This group doesn't have any students assigned yet.
+                </Text>
+              </div>
             </Card>
           )}
         </div>
